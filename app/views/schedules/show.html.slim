@@ -1,0 +1,24 @@
+p#notice = notice
+
+p
+  b Origin:
+  = @schedule.origin
+p
+  b Destination:
+  = @schedule.destination
+p
+  b Depart at:
+  = @schedule.depart_at
+p
+  b Return at:
+  = @schedule.return_at
+p
+  b Adults:
+  = @schedule.adults
+p
+  b Children:
+  = @schedule.children
+
+= link_to 'Edit', edit_schedule_path(@schedule)
+'|
+= link_to 'Back', schedules_path

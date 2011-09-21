@@ -1,0 +1,11 @@
+= simple_form_for @schedule do |f|
+  = f.attribute :origin, :collection => City.to_a
+  = f.attribute :destination, :collection => City.to_a
+  = f.attribute :depart_at
+  = f.attribute :return_at
+  = f.attribute :adults
+  = f.attribute :children
+  = f.attribute :maximum_price
+  = f.attribute :email
+
+  = f.submit

@@ -1,0 +1,29 @@
+h1 Agendamentos
+
+table
+  tr
+    th Origin
+    th Destination
+    th Depart at
+    th Return at
+    th Adults
+    th Children
+    th
+    th
+    th
+
+  - @schedules.each do |schedule|
+    tr
+      td= schedule.origin
+      td= schedule.destination
+      td= schedule.depart_at
+      td= schedule.return_at
+      td= schedule.adults
+      td= schedule.children
+      td= link_to 'Show', schedule
+      td= link_to 'Edit', edit_schedule_path(schedule)
+      td= link_to 'Destroy', schedule, :confirm => 'Are you sure?', :method => :delete
+
+br
+
+= link_to 'Novo Agendamento', new_schedule_path
