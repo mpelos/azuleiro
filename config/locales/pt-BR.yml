@@ -237,6 +237,7 @@
         return_at: "Data de Retorno"
         adults: "Quantidade de Adultos"
         children: "Quantidade de crianças"
+        recipients: "E-mails"
 
     errors:
       template:
