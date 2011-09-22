@@ -31,6 +31,7 @@ gem 'enumerate_it'
 gem 'simple_form'
 gem 'show_for'
 gem 'headless'
+gem 'whenever', :require => false
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
