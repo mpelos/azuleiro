@@ -15,7 +15,7 @@ class FlightSchedule < ActiveRecord::Base
 
   default_scope order("depart_at")
 
-  def update_flight_price
+  def update_current_price
     session = Capybara::Session.new(:webkit)
     session.visit("http://viajemais.voeazul.com.br")
 
