@@ -11,7 +11,7 @@ class Schedule < ActiveRecord::Base
   has_enumeration_for :origin,      :with => City
   has_enumeration_for :destination, :with => City
 
-  validates_presence_of :origin, :destination, :depart_at, :return_at, :adults, :children, :maximum_price, :email
+  validates_presence_of :origin, :destination, :depart_at, :return_at, :adults, :children, :maximum_price, :recipients
 
   def flight_price
     session = Capybara::Session.new(:webkit)
