@@ -1,8 +1,8 @@
-class SchedulesController < ApplicationController
+class FlightSchedulesController < ApplicationController
   # GET /schedules
   # GET /schedules.xml
   def index
-    @schedules = Schedule.all
+    @schedules = FlightSchedule.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class SchedulesController < ApplicationController
   # GET /schedules/1
   # GET /schedules/1.xml
   def show
-    @schedule = Schedule.find(params[:id])
+    @schedule = FlightSchedule.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +24,7 @@ class SchedulesController < ApplicationController
   # GET /schedules/new
   # GET /schedules/new.xml
   def new
-    @schedule = Schedule.new
+    @schedule = FlightSchedule.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,17 +34,17 @@ class SchedulesController < ApplicationController
 
   # GET /schedules/1/edit
   def edit
-    @schedule = Schedule.find(params[:id])
+    @schedule = FlightSchedule.find(params[:id])
   end
 
   # POST /schedules
   # POST /schedules.xml
   def create
-    @schedule = Schedule.new(params[:schedule])
+    @schedule = FlightSchedule.new(params[:flight_schedule])
 
     respond_to do |format|
       if @schedule.save
-        format.html { redirect_to(@schedule, :notice => 'Schedule was successfully created.') }
+        format.html { redirect_to(@schedule, :notice => 'FlightSchedule was successfully created.') }
         format.xml  { render :xml => @schedule, :status => :created, :location => @schedule }
       else
         format.html { render :action => "new" }
@@ -56,11 +56,11 @@ class SchedulesController < ApplicationController
   # PUT /schedules/1
   # PUT /schedules/1.xml
   def update
-    @schedule = Schedule.find(params[:id])
+    @schedule = FlightSchedule.find(params[:id])
 
     respond_to do |format|
-      if @schedule.update_attributes(params[:schedule])
-        format.html { redirect_to(@schedule, :notice => 'Schedule was successfully updated.') }
+      if @schedule.update_attributes(params[:flight_schedule])
+        format.html { redirect_to(@schedule, :notice => 'FlightSchedule was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -72,7 +72,7 @@ class SchedulesController < ApplicationController
   # DELETE /schedules/1
   # DELETE /schedules/1.xml
   def destroy
-    @schedule = Schedule.find(params[:id])
+    @schedule = FlightSchedule.find(params[:id])
     @schedule.destroy
 
     respond_to do |format|

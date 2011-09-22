@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class Schedule < ActiveRecord::Base
+class FlightSchedule < ActiveRecord::Base
   require "capybara"
 
   include EnumerateIt

@@ -1,6 +1,6 @@
 AzulChecker::Application.routes.draw do
-  root :to => "schedules#index"
-  resources :schedules
+  root :to => "flight_schedules#index"
+  resources :flight_schedules
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
