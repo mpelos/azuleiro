@@ -7,7 +7,7 @@ namespace :flights do
     headless.start
 
     FlightSchedule.where(["depart_at >= ?", Time.now]).each do |schedule|
-      previous_price = schedule.current_price
+      previous_price = schedule.current_price || 0
       schedule.update_current_price
       if (schedule.current_price <= schedule.maximum_price) && (schedule.current_price != previous_price)
         ScheduleMailer.notify_lower_price(schedule).deliver
