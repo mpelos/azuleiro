@@ -227,10 +227,10 @@
 
   activerecord:
     models:
-       schedule: "Agendamentos"
+       flight_schedule: "Agendamentos"
 
     attributes:
-      schedule:
+      flight_schedule:
         origin: "Origem"
         destination: "Destino"
         depart_at: "Data da Viagem"
