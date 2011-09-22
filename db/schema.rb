@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110919125533) do
+ActiveRecord::Schema.define(:version => 20110922161948) do
 
   create_table "schedules", :force => true do |t|
     t.string   "origin"
@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(:version => 20110919125533) do
     t.integer  "adults",        :default => 1
     t.integer  "children",      :default => 0
     t.float    "maximum_price"
-    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "recipients"
   end
 
 end
