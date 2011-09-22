@@ -13,6 +13,8 @@ class FlightSchedule < ActiveRecord::Base
 
   validates_presence_of :origin, :destination, :depart_at, :return_at, :adults, :children, :maximum_price, :recipients
 
+  default_scope order("depart_at")
+
   def flight_price
     session = Capybara::Session.new(:webkit)
     session.visit("http://viajemais.voeazul.com.br")
