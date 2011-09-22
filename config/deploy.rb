@@ -36,8 +36,8 @@ namespace :deploy do
   end
 end
 
-before "deploy:setup", "db:configure"
-after  "deploy:update_code", "db:symlink"
+before "deploy:setup", "db:configure", "credentials:configure"
+after  "deploy:update_code", "db:symlink", "credentials:symlink"
 after  "deploy:symlink", "deploy:cleanup"
 
 namespace :db do
@@ -71,14 +71,54 @@ namespace :db do
       production:
         database: #{application}_production
         <<: *base
-    EOF
+        EOF
 
-    run "mkdir -p #{shared_path}/config"
-    put db_config, "#{shared_path}/config/database.yml"
+        run "mkdir -p #{shared_path}/config"
+        put db_config, "#{shared_path}/config/database.yml"
   end
 
   desc "Make symlink for database yaml"
   task :symlink do
     run "ln -nfs #{shared_path}/config/database.yml #{latest_release}/config/database.yml"
+  end
+end
+
+namespace :credentials do
+  desc "Create credentials yaml in shared path"
+  task :configure do
+    set :admin_username do
+      Capistrano::CLI.ui.ask "Enter the admin user: "
+    end
+
+    set :admin_password do
+      Capistrano::CLI.password_prompt "Enter the admin password: "
+    end
+
+    set :email_domain do
+      Capistrano::CLI.ui.ask "Enter the e-mail domain: "
+    end
+
+    set :email_username do
+      Capistrano::CLI.ui.ask "Enter the e-mail user: "
+    end
+
+    set :email_password do
+      Capistrano::CLI.password_prompt "Enter the e-mail password: "
+    end
+
+    credentials = <<-EOF
+      email:
+        domain: "#{email_domain}"
+        user: "#{email_username}"
+        password: "#{email_password}"
+    EOF
+
+    run "mkdir -p #{shared_path}/config"
+    put credentials, "#{shared_path}/config/credentials.yml"
+  end
+
+  desc "Make symlink for admin and e-mail credentials yaml"
+  task :symlink do
+    run "ln -nfs #{shared_path}/config/credentials.yml #{latest_release}/config/credentials.yml"
   end
 end
