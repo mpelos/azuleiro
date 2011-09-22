@@ -8,8 +8,7 @@ table
     th = FlightSchedule.human_attribute_name :return_at
     th = FlightSchedule.human_attribute_name :adults
     th = FlightSchedule.human_attribute_name :children
-    th
-    th
+    th = FlightSchedule.human_attribute_name :current_price
     th
 
   - @schedules.each do |schedule|
@@ -20,9 +19,11 @@ table
       td= l schedule.return_at, :format => :long
       td= schedule.adults
       td= schedule.children
-      td= link_to 'Visualizar', schedule
-      td= link_to 'Editar', edit_flight_schedule_path(schedule)
-      td= link_to 'Excluir', schedule, :confirm => 'Você tem certeza?', :method => :delete
+      td= number_to_currency schedule.current_price
+      td
+        = link_to 'Visualizar', schedule
+        = link_to 'Editar', edit_flight_schedule_path(schedule)
+        = link_to 'Excluir', schedule, :confirm => 'Você tem certeza?', :method => :delete
 
 br
 

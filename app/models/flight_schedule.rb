@@ -15,7 +15,7 @@ class FlightSchedule < ActiveRecord::Base
 
   default_scope order("depart_at")
 
-  def flight_price
+  def get_flight_price
     session = Capybara::Session.new(:webkit)
     session.visit("http://viajemais.voeazul.com.br")
 
@@ -56,7 +56,11 @@ class FlightSchedule < ActiveRecord::Base
     session.execute_script select_depart_flight_jquery_script
     session.execute_script select_return_flight_jquery_script
 
-    session.find("xtotal").text
+    current_flight_price = session.find("xtotal").text
+    current_flight_price.sub("R$ ", "").sub(",", ".").to_f
+
+    update_attribute :current_price, current_flight_price
+    current_flight_price
   end
 
   protected
