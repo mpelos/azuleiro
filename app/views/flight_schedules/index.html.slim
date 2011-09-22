@@ -1,28 +1,28 @@
-h1 Agendamentos
+h1 = FlightSchedule.model_name.human
 
 table
   tr
-    th Origin
-    th Destination
-    th Depart at
-    th Return at
-    th Adults
-    th Children
+    th = FlightSchedule.human_attribute_name :origin
+    th = FlightSchedule.human_attribute_name :destination
+    th = FlightSchedule.human_attribute_name :depart_at
+    th = FlightSchedule.human_attribute_name :return_at
+    th = FlightSchedule.human_attribute_name :adults
+    th = FlightSchedule.human_attribute_name :children
     th
     th
     th
 
   - @schedules.each do |schedule|
     tr
-      td= schedule.origin
-      td= schedule.destination
-      td= schedule.depart_at
-      td= schedule.return_at
+      td= schedule.origin_humanize
+      td= schedule.destination_humanize
+      td= l schedule.depart_at, :format => :long
+      td= l schedule.return_at, :format => :long
       td= schedule.adults
       td= schedule.children
-      td= link_to 'Show', schedule
-      td= link_to 'Edit', edit_flight_schedule_path(schedule)
-      td= link_to 'Destroy', schedule, :confirm => 'Are you sure?', :method => :delete
+      td= link_to 'Visualizar', schedule
+      td= link_to 'Editar', edit_flight_schedule_path(schedule)
+      td= link_to 'Excluir', schedule, :confirm => 'Você tem certeza?', :method => :delete
 
 br
 
