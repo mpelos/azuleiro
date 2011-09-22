@@ -30,6 +30,7 @@ gem 'capybara-webkit'
 gem 'enumerate_it'
 gem 'simple_form'
 gem 'show_for'
+gem 'headless'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
