@@ -18,3 +18,9 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+set :output, "#{Rails.root}/log/cron.log"
+
+every :hour do
+  rake "flights:check"
+end

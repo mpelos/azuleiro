@@ -1,5 +1,7 @@
 # Bundler Integration
 require "bundler/capistrano"
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
 
 # Application Settings
 set :application,   "azul_checker"
