@@ -21,6 +21,6 @@
 
 set :output, "#{path}/log/cron.log"
 
-every :hour do
+every 10.minutes do
   rake "flights:check"
 end
