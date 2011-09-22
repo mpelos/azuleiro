@@ -76,7 +76,7 @@ class FlightSchedulesController < ApplicationController
     @schedule.destroy
 
     respond_to do |format|
-      format.html { redirect_to(schedules_url) }
+      format.html { redirect_to(flight_schedules_url) }
       format.xml  { head :ok }
     end
   end
