@@ -53,27 +53,34 @@ class FlightSchedule < ActiveRecord::Base
 
     session.click_link "COMPRE AGORA"
 
-    session.execute_script select_depart_flight_jquery_script
-    session.execute_script select_return_flight_jquery_script
+    # Insere a classe target nos inputs do tipo radio dos horários determinados via javascript
+    session.execute_script add_class_target_to_scheduled_depart_flight
+    session.execute_script add_class_target_to_scheduled_return_flight
 
+    # Clica no input radio baseado na classe html target
+    session.find("##{DEPART_TABLE_HTML_ID} .target").click
+    session.find("##{RETURN_TABLE_HTML_ID} .target").click
+
+    # Obtém o valor total e o transforma em um Float
     current_flight_price = session.find("xtotal").text
     current_flight_price.sub("R$ ", "").sub(",", ".").to_f
 
+    # Atualiza current_price com o total obtido
     update_attribute :current_price, current_flight_price
     current_flight_price
   end
 
   protected
-    def select_depart_flight_jquery_script
-      select_flight_jquery_script(DEPART_TABLE_HTML_ID)
+    def add_class_target_to_scheduled_depart_flight
+      add_class_target_to_scheduled_flight(DEPART_TABLE_HTML_ID)
     end
 
-    def select_return_flight_jquery_script
-      select_flight_jquery_script(RETURN_TABLE_HTML_ID)
+    def add_class_target_to_scheduled_return_flight
+      add_class_target_to_scheduled_flight(RETURN_TABLE_HTML_ID)
     end
 
-    def select_flight_jquery_script(table_html_id)
+    def add_class_target_to_scheduled_flight(table_html_id)
       datetime = (table_html_id == DEPART_TABLE_HTML_ID) ? depart_at : return_at
-      "jQuery('##{table_html_id} td[colspan=3]').each(function(){ if( $(this).find('.output span').text() == '#{I18n.l datetime, :format => :time_only}' ){ $(this).parent().find('.promo input').click() } })"
+      "jQuery('##{table_html_id} td[colspan=3]').each(function(){ if( $(this).find('.output span').text() == '#{I18n.l datetime, :format => :time_only}' ){ $(this).parent().find('.promo input').addClass('target') } })"
     end
 end
