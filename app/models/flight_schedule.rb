@@ -13,7 +13,7 @@ class FlightSchedule < ActiveRecord::Base
 
   validates_presence_of :origin, :destination, :depart_at, :return_at, :adults, :children, :maximum_price, :recipients
 
-  default_scope order("depart_at")
+  default_scope order("depart_at", "return_at")
 
   def update_current_price
     session = Capybara::Session.new(:webkit)
