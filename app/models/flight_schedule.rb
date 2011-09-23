@@ -61,7 +61,8 @@ class FlightSchedule < ActiveRecord::Base
     session.find("##{DEPART_TABLE_HTML_ID} .target").click
     session.find("##{RETURN_TABLE_HTML_ID} .target").click
 
-    # Obtém o valor total e o transforma em um Float
+    # Aguarda meio segundo, tempo necessário para o valor total ser atualizado via javascript, obtém o valor total e o transforma em um Float
+    sleep 0.5
     current_flight_price = session.find("xtotal").text
     current_flight_price.sub("R$ ", "").sub(",", ".").to_f
 
