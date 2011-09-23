@@ -15,8 +15,8 @@ table
     tr
       td= schedule.origin_humanize
       td= schedule.destination_humanize
-      td= l schedule.depart_at, :format => :long
-      td= l schedule.return_at, :format => :long
+      td= l schedule.depart_at, :format => :short
+      td= l schedule.return_at, :format => :short
       td= schedule.adults
       td= schedule.children
       td= number_to_currency schedule.current_price
