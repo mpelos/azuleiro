@@ -9,21 +9,21 @@
       long: "%d de %B de %Y"
 
     day_names:
-      - Domingo
-      - Segunda
-      - Terça
-      - Quarta
-      - Quinta
-      - Sexta
-      - Sábado
+      - domingo
+      - segunda
+      - terça
+      - quarta
+      - quinta
+      - sexta
+      - sábado
     abbr_day_names:
-      - Dom
-      - Seg
-      - Ter
-      - Qua
-      - Qui
-      - Sex
-      - Sáb
+      - dom
+      - seg
+      - ter
+      - qua
+      - qui
+      - sex
+      - sáb
 
     month_names:
       - ~
@@ -235,8 +235,8 @@
         destination: "Destino"
         depart_at: "Data da Viagem"
         return_at: "Data de Retorno"
-        adults: "Quantidade de Adultos"
-        children: "Quantidade de crianças"
+        adults: "Qde. de Adultos"
+        children: "Qde. de crianças"
         recipients: "E-mails"
         current_price: "Preço Atual"
 
