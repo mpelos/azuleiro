@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title AzulChecker
+
+    = stylesheet_link_tag :all
+    = javascript_include_tag :defaults
+    = csrf_meta_tag
+
+  body
+    = yield
