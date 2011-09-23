@@ -1,24 +1,26 @@
-p#notice = notice
+= show_for @schedule do |schedule|
+  = schedule.attribute :origin do
+    = @schedule.origin_humanize
 
-p
-  b Origin:
-  = @schedule.origin
-p
-  b Destination:
-  = @schedule.destination
-p
-  b Depart at:
-  = @schedule.depart_at
-p
-  b Return at:
-  = @schedule.return_at
-p
-  b Adults:
-  = @schedule.adults
-p
-  b Children:
-  = @schedule.children
+  = schedule.attribute :destination do
+    = @schedule.destination_humanize
 
-= link_to 'Edit', edit_flight_schedule_path(@schedule)
-'|
-= link_to 'Back', flight_schedules_path
+  = schedule.attribute :depart_at
+  = schedule.attribute :return_at
+  = schedule.attribute :adults
+  = schedule.attribute :children
+  = schedule.attribute :maximum_price do
+    = number_to_currency @schedule.maximum_price
+
+  = schedule.attribute :current_price do
+    - if @schedule.current_price.present?
+      = number_to_currency @schedule.current_price
+      = " (valor obtido às #{@schedule.updated_at.strftime('%H:%M h')})"
+    - else
+      = t('show_for.blank')
+
+  = schedule.attribute :recipients
+
+= link_to 'Editar', edit_flight_schedule_path(@schedule)
+= " | "
+= link_to 'Voltar', flight_schedules_path
