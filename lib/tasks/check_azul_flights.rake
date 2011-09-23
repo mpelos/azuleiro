@@ -6,7 +6,7 @@ namespace :flights do
     headless = Headless.new
     headless.start
 
-    FlightSchedule.where(["depart_at >= ?", Time.now]).each do |schedule|
+    FlightSchedule.where("depart_at >= ?", Time.current).each do |schedule|
       previous_price = schedule.current_price
       schedule.update_current_price
       if (schedule.current_price <= schedule.maximum_price) && (schedule.current_price != previous_price)
