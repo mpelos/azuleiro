@@ -14,6 +14,6 @@ namespace :flights do
       end
     end
 
-    headless.destroy
+    # headless.destroy
   end
 end
