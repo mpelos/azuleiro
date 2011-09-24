@@ -13,6 +13,8 @@ class FlightSchedule < ActiveRecord::Base
 
   validates_presence_of :origin, :destination, :adults, :children, :maximum_price, :recipients
 
+  after_save :find_or_create_flight_schedule_dates
+
   default_scope order("start_depart_datetime", "end_return_datetime")
 
   def update_current_price
@@ -72,6 +74,19 @@ class FlightSchedule < ActiveRecord::Base
   end
 
   protected
+    def find_or_create_flight_schedule_dates
+      depart_range = start_depart_datetime.to_date..end_depart_datetime.to_date
+      return_range = start_return_datetime.to_date..end_return_datetime.to_date
+
+      depart_range.each do |date|
+        FlightScheduleDate.find_or_create_by_origin_id_and_destination_id_and_date(origin_id, destination_id, date)
+      end
+
+      return_range.each do |date|
+        FlightScheduleDate.find_or_create_by_origin_id_and_destination_id_and_date(destination_id, origin_id, date)
+      end
+    end
+
     def add_class_target_to_scheduled_depart_flight
       add_class_target_to_scheduled_flight(DEPART_TABLE_HTML_ID)
     end
