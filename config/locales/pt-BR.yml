@@ -237,6 +237,7 @@
         return_at: "Data de Retorno"
         adults: "Qde. de Adultos"
         children: "Qde. de crianças"
+        maximum_price: "Preço máximo"
         recipients: "E-mails"
         current_price: "Preço Atual"
 
