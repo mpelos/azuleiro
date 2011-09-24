@@ -5,3 +5,14 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+
+City.destroy_all
+
+cities = {}
+cities["Campinas"]  = "VCP"
+cities["Joinville"] = "JOI"
+cities["Recife"]    = "REC"
+
+cities.each_pair do |name, code|
+  City.create(:name => name, :code => code)
+end

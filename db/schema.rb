@@ -10,11 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110923231358) do
+ActiveRecord::Schema.define(:version => 20110924020233) do
+
+  create_table "cities", :force => true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "flight_schedules", :force => true do |t|
-    t.string   "origin"
-    t.string   "destination"
     t.integer  "adults",                :default => 1
     t.integer  "children",              :default => 0
     t.float    "maximum_price"
@@ -26,6 +31,8 @@ ActiveRecord::Schema.define(:version => 20110923231358) do
     t.datetime "end_depart_datetime"
     t.datetime "start_return_datetime"
     t.datetime "end_return_datetime"
+    t.integer  "origin_id"
+    t.integer  "destination_id"
   end
 
 end

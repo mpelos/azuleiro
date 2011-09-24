@@ -8,15 +8,10 @@ class FlightSchedule < ActiveRecord::Base
   DEPART_TABLE_HTML_ID = "GoingPrices"
   RETURN_TABLE_HTML_ID = "BackPrices"
 
-  has_enumeration_for :origin,      :with => City
-  has_enumeration_for :destination, :with => City
+  belongs_to :origin,      :class_name => "City", :foreign_key => "origin_id"
+  belongs_to :destination, :class_name => "City", :foreign_key => "destination_id"
 
-  validates_presence_of :origin,
-                        :destination,
-                        :adults,
-                        :children,
-                        :maximum_price,
-                        :recipients
+  validates_presence_of :origin, :destination, :adults, :children, :maximum_price, :recipients
 
   default_scope order("start_depart_datetime", "end_return_datetime")
 

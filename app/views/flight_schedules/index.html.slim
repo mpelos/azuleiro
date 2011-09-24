@@ -15,8 +15,8 @@ table
 
   - @schedules.each do |schedule|
     tr
-      td = schedule.origin_humanize
-      td = schedule.destination_humanize
+      td = schedule.origin
+      td = schedule.destination
       td
         = "de #{l schedule.start_depart_datetime, :format => :short}"
         = " a #{l schedule.end_depart_datetime, :format => :short}"

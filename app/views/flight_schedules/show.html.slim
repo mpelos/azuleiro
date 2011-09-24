@@ -1,9 +1,6 @@
 = show_for @schedule do |schedule|
-  = schedule.attribute :origin do
-    = @schedule.origin_humanize
-
-  = schedule.attribute :destination do
-    = @schedule.destination_humanize
+  = schedule.association :origin
+  = schedule.association :destination
 
   = schedule.attribute :depart_at_range, :label => "Partindo" do
     p = "De #{l @schedule.start_depart_datetime}"

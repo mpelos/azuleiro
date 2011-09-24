@@ -1,6 +1,6 @@
 = simple_form_for @schedule do |f|
-  = f.attribute :origin, :collection => City.to_a
-  = f.attribute :destination, :collection => City.to_a
+  = f.association :origin
+  = f.association :destination
 
   = f.attribute :depart_range, :label => "Partindo", :required => true do
     = f.label :start_depart_datetime
