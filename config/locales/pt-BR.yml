@@ -7,6 +7,8 @@
       default: "%d/%m/%Y"
       short: "%d de %B"
       long: "%d de %B de %Y"
+      only_day: "%d"
+      discard_day: "%b %y"
 
     day_names:
       - domingo
