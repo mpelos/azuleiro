@@ -11,9 +11,14 @@ class FlightSchedule < ActiveRecord::Base
   has_enumeration_for :origin,      :with => City
   has_enumeration_for :destination, :with => City
 
-  validates_presence_of :origin, :destination, :depart_at, :return_at, :adults, :children, :maximum_price, :recipients
+  validates_presence_of :origin,
+                        :destination,
+                        :adults,
+                        :children,
+                        :maximum_price,
+                        :recipients
 
-  default_scope order("depart_at", "return_at")
+  default_scope order("start_depart_datetime", "end_return_datetime")
 
   def update_current_price
     session = Capybara::Session.new(:webkit)

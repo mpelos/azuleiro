@@ -5,8 +5,14 @@
   = schedule.attribute :destination do
     = @schedule.destination_humanize
 
-  = schedule.attribute :depart_at
-  = schedule.attribute :return_at
+  = schedule.attribute :depart_at_range, :label => "Partindo" do
+    p = "De #{l @schedule.start_depart_datetime}"
+    p = " a #{l @schedule.end_depart_datetime}"
+
+  = schedule.attribute :return_at_range, :label => "Retornando" do
+    p = "De #{l @schedule.start_return_datetime}"
+    p = " a #{l @schedule.end_return_datetime}"
+
   = schedule.attribute :adults
   = schedule.attribute :children
   = schedule.attribute :maximum_price do

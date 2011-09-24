@@ -1,8 +1,19 @@
 = simple_form_for @schedule do |f|
   = f.attribute :origin, :collection => City.to_a
   = f.attribute :destination, :collection => City.to_a
-  = f.attribute :depart_at
-  = f.attribute :return_at
+
+  = f.attribute :depart_range, :label => "Partindo", :required => true do
+    = f.label :start_depart_datetime
+    = f.datetime_select :start_depart_datetime
+    = f.label :end_depart_datetime
+    = f.datetime_select :end_depart_datetime
+
+  = f.attribute :return_range, :label => "Retornando", :required => true do
+    = f.label :start_return_datetime
+    = f.datetime_select :start_return_datetime, :required => :false
+    = f.label :end_return_datetime
+    = f.datetime_select :end_return_datetime
+
   = f.attribute :adults
   = f.attribute :children
   = f.attribute :maximum_price

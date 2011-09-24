@@ -233,8 +233,10 @@
       flight_schedule:
         origin: "Origem"
         destination: "Destino"
-        depart_at: "Data da Viagem"
-        return_at: "Data de Retorno"
+        start_depart_datetime: "de"
+        end_depart_datetime: "a"
+        start_return_datetime: "de"
+        end_return_datetime: "a"
         adults: "Qde. de Adultos"
         children: "Qde. de crianças"
         maximum_price: "Preço máximo"

@@ -4,8 +4,8 @@ table
   tr
     th = FlightSchedule.human_attribute_name :origin
     th = FlightSchedule.human_attribute_name :destination
-    th = FlightSchedule.human_attribute_name :depart_at
-    th = FlightSchedule.human_attribute_name :return_at
+    th Partindo
+    th Retornando
     th = FlightSchedule.human_attribute_name :adults
     th = FlightSchedule.human_attribute_name :children
     th = FlightSchedule.human_attribute_name :current_price
@@ -15,16 +15,20 @@ table
 
   - @schedules.each do |schedule|
     tr
-      td= schedule.origin_humanize
-      td= schedule.destination_humanize
-      td= l schedule.depart_at, :format => :short
-      td= l schedule.return_at, :format => :short
-      td= schedule.adults
-      td= schedule.children
-      td= number_to_currency schedule.current_price
-      td= link_to 'Visualizar', schedule
-      td= link_to 'Editar', edit_flight_schedule_path(schedule)
-      td= link_to 'Excluir', schedule, :confirm => 'Você tem certeza?', :method => :delete
+      td = schedule.origin_humanize
+      td = schedule.destination_humanize
+      td
+        = "de #{l schedule.start_depart_datetime, :format => :short}"
+        = " a #{l schedule.end_depart_datetime, :format => :short}"
+      td
+        = "de #{l schedule.start_return_datetime, :format => :short}"
+        = " a #{l schedule.end_return_datetime, :format => :short}"
+      td = schedule.adults
+      td = schedule.children
+      td = number_to_currency schedule.current_price
+      td = link_to 'Visualizar', schedule
+      td = link_to 'Editar', edit_flight_schedule_path(schedule)
+      td = link_to 'Excluir', schedule, :confirm => 'Você tem certeza?', :method => :delete
 
 br
 

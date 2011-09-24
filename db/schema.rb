@@ -10,20 +10,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110922232228) do
+ActiveRecord::Schema.define(:version => 20110923231358) do
 
   create_table "flight_schedules", :force => true do |t|
     t.string   "origin"
     t.string   "destination"
-    t.datetime "depart_at"
-    t.datetime "return_at"
-    t.integer  "adults",        :default => 1
-    t.integer  "children",      :default => 0
+    t.integer  "adults",                :default => 1
+    t.integer  "children",              :default => 0
     t.float    "maximum_price"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "recipients"
     t.float    "current_price"
+    t.datetime "start_depart_datetime"
+    t.datetime "end_depart_datetime"
+    t.datetime "start_return_datetime"
+    t.datetime "end_return_datetime"
   end
 
 end
