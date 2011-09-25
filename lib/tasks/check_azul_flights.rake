@@ -7,6 +7,7 @@ namespace :flights do
     headless.start
 
     AzulWatcher.new.update_flight_prices
+    FlightSchedule.where(["end_return_datetime >= ?", Time.current])
 
     # headless.destroy
   end

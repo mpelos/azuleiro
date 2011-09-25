@@ -24,6 +24,21 @@
 
   = schedule.attribute :recipients
 
+  h2 Melhor valor atual
+
+  table
+    thead
+      tr
+        th Partindo
+        th Retornando
+        th Valor
+
+    tbody
+      tr
+        td = l @schedule.lower_depart_flight_price.datetime
+        td = l @schedule.lower_return_flight_price.datetime
+        td = number_to_currency @schedule.lower_total_price
+
 = link_to 'Editar', edit_flight_schedule_path(@schedule)
 = " | "
 = link_to 'Voltar', flight_schedules_path
