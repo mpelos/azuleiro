@@ -8,7 +8,7 @@ namespace :flights do
 
     AzulWatcher.new.update_flight_prices
 
-    FlightSchedule.where(["end_end_depart_datetime >= ?", Time.current]).each do |schedule|
+    FlightSchedule.where(["end_depart_datetime >= ?", Time.current]).each do |schedule|
       if schedule.lower_total_price <= schedule.maximum_price
         ScheduleMailer.notify_lower_price(schedule).deliver
       end
