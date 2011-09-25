@@ -7,7 +7,12 @@ namespace :flights do
     headless.start
 
     AzulWatcher.new.update_flight_prices
-    FlightSchedule.where(["end_return_datetime >= ?", Time.current])
+
+    FlightSchedule.where(["end_end_depart_datetime >= ?", Time.current]).each do |schedule|
+      if schedule.lower_total_price <= schedule.maximum_price
+        ScheduleMailer.notify_lower_price(schedule).deliver
+      end
+    end
 
     # headless.destroy
   end
