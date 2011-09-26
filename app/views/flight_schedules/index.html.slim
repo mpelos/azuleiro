@@ -25,7 +25,10 @@ table
         = " a #{l schedule.end_return_datetime, :format => :short}"
       td = schedule.adults
       td = schedule.children
-      td = number_to_currency schedule.lower_total_price
+      td
+        - if schedule.depart_flight_schedule_prices.any? && schedule.return_flight_schedule_prices.any?
+          = number_to_currency schedule.lower_total_price
+
       td = link_to 'Visualizar', schedule
       td = link_to 'Editar', edit_flight_schedule_path(schedule)
       td = link_to 'Excluir', schedule, :confirm => 'Você tem certeza?', :method => :delete
