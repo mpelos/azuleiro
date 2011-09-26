@@ -1,5 +1,10 @@
 class AzulWatcher
+  require 'headless'
+
   def update_flight_prices
+    headless = Headless.new
+    headless.start
+
     @session = Capybara::Session.new(:webkit)
     @session.visit("http://viajemais.voeazul.com.br")
 
