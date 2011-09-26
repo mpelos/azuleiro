@@ -27,11 +27,11 @@ class FlightSchedule < ActiveRecord::Base
   end
 
   def depart_flight_schedule_prices
-    depart_flights_schedule_dates.collect { |fsd| fsd.flight_schedule_prices }.flatten.sort_by { |fsp| fsp.price }.delete_if { |fsp| fsp.datetime < Time.current }
+    find_flight_schedule_prices_by_sql origin.id, destination.id
   end
 
   def return_flight_schedule_prices
-    return_flights_schedule_dates.collect { |fsd| fsd.flight_schedule_prices }.flatten.sort_by { |fsp| fsp.price }.delete_if { |fsp| fsp.datetime < Time.current }
+    find_flight_schedule_prices_by_sql destination.id, origin.id
   end
 
   def lower_total_price
@@ -52,5 +52,9 @@ class FlightSchedule < ActiveRecord::Base
       return_range.each do |date|
         flight_schedule_dates.find_or_create_by_origin_id_and_destination_id_and_date(destination_id, origin_id, date)
       end
+    end
+
+    def find_flight_schedule_prices_by_sql(origin_id, destination_id)
+      FlightSchedulePrice.find_by_sql "SELECT `flight_schedule_prices`.* FROM `flight_schedule_prices` INNER JOIN `flight_schedule_dates` ON `flight_schedule_prices`.`flight_schedule_date_id` = `flight_schedule_dates`.`id` INNER JOIN `flight_schedule_dates_flight_schedules` ON `flight_schedule_dates`.`id` = `flight_schedule_dates_flight_schedules`.`flight_schedule_date_id` INNER JOIN `flight_schedules` ON `flight_schedules`.`id` =  `flight_schedule_dates_flight_schedules`.`flight_schedule_id` WHERE `flight_schedules`.`id` = #{id} AND `flight_schedule_dates`.`origin_id` = #{origin_id} AND `flight_schedule_dates`.`destination_id` = #{destination_id} AND `flight_schedule_prices`.`datetime` >= '#{Time.current}' ORDER BY `flight_schedule_prices`.`price`"
     end
 end
