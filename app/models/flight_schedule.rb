@@ -31,7 +31,7 @@ class FlightSchedule < ActiveRecord::Base
   end
 
   def return_flight_schedule_prices
-    depart_flights_schedule_dates.collect { |fsd| fsd.flight_schedule_prices }.flatten.sort_by { |fsp| fsp.price }.delete_if { |fsp| fsp.datetime < Time.current }
+    return_flights_schedule_dates.collect { |fsd| fsd.flight_schedule_prices }.flatten.sort_by { |fsp| fsp.price }.delete_if { |fsp| fsp.datetime < Time.current }
   end
 
   def lower_total_price
