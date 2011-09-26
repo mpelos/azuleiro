@@ -19,7 +19,7 @@ class AzulWatcher
 
       @session.find(:xpath, "//table[@class='info-table']").text.split("\nvoo ").drop(1).each do |text|
         localized_time = text.match(/\d{2}:\d{2}/).to_s
-        datetime = Time.new schedule.date.year, schedule.date.month, schedule.date.day, localized_time[0, 2], localized_time[3, 2], 0
+        datetime = Time.local schedule.date.year, schedule.date.month, schedule.date.day, localized_time[0, 2], localized_time[3, 2], 0
         price = text.match(/\d+,\d{2}/).to_s.sub!(",", ".").to_f
 
         FlightSchedulePrice.find_or_create_by_flight_schedule_date_id_and_datetime(schedule.id, datetime).update_attribute :price, price
