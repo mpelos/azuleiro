@@ -5,6 +5,6 @@ class ScheduleMailer < ActionMailer::Base
 
   def notify_lower_price(schedule)
     @schedule = schedule
-    mail :to => schedule.recipients.gsub!(" ", "").split(","), :subject => "Vôo agendado da azul com preço inferior ao estipulado"
+    mail :to => schedule.recipients.gsub!(" ", "").split(","), :subject => "Vôo na azul com valor inferior ao estipulado"
   end
 end
