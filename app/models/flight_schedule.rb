@@ -41,15 +41,16 @@ class FlightSchedule < ActiveRecord::Base
 
   protected
     def find_or_create_flight_schedule_dates
+      self.flight_schedule_dates = []
       depart_range = start_depart_datetime.to_date..end_depart_datetime.to_date
       return_range = start_return_datetime.to_date..end_return_datetime.to_date
 
       depart_range.each do |date|
-        flight_schedule_dates << FlightScheduleDate.find_or_create_by_origin_id_and_destination_id_and_date(origin_id, destination_id, date)
+        flight_schedule_dates.find_or_create_by_origin_id_and_destination_id_and_date(origin_id, destination_id, date)
       end
 
       return_range.each do |date|
-        flight_schedule_dates << FlightScheduleDate.find_or_create_by_origin_id_and_destination_id_and_date(destination_id, origin_id, date)
+        flight_schedule_dates.find_or_create_by_origin_id_and_destination_id_and_date(destination_id, origin_id, date)
       end
     end
 end
