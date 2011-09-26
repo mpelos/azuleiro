@@ -15,13 +15,6 @@
   = schedule.attribute :maximum_price do
     = number_to_currency @schedule.maximum_price
 
-  = schedule.attribute :current_price do
-    - if @schedule.current_price.present?
-      = number_to_currency @schedule.current_price
-      = " (valor obtido às #{@schedule.updated_at.strftime('%H:%M h')})"
-    - else
-      = t('show_for.blank')
-
   = schedule.attribute :recipients
 
   h2 Melhor valor atual

@@ -8,7 +8,6 @@ table
     th Retornando
     th = FlightSchedule.human_attribute_name :adults
     th = FlightSchedule.human_attribute_name :children
-    th = FlightSchedule.human_attribute_name :current_price
     th
     th
     th
@@ -25,7 +24,6 @@ table
         = " a #{l schedule.end_return_datetime, :format => :short}"
       td = schedule.adults
       td = schedule.children
-      td = number_to_currency schedule.current_price
       td = link_to 'Visualizar', schedule
       td = link_to 'Editar', edit_flight_schedule_path(schedule)
       td = link_to 'Excluir', schedule, :confirm => 'Você tem certeza?', :method => :delete
