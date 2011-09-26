@@ -5,8 +5,6 @@ class FlightSchedule < ActiveRecord::Base
 
   include EnumerateIt
 
-  DEPART_TABLE_HTML_ID = "GoingPrices"
-  RETURN_TABLE_HTML_ID = "BackPrices"
   DEPARTURE_TAX = 16.23
 
   belongs_to              :origin,      :class_name => "City", :foreign_key => "origin_id"
@@ -19,25 +17,26 @@ class FlightSchedule < ActiveRecord::Base
 
   default_scope order("start_depart_datetime", "end_return_datetime")
 
+
   def depart_flights_schedule_dates
-    flight_schedule_dates.joins(:flight_schedule_prices).where(:origin_id => origin.id, :destination_id => destination.id).order("flight_schedule_prices.price ASC")
+    flight_schedule_dates.where(:origin_id => origin.id, :destination_id => destination.id)
   end
 
   def return_flights_schedule_dates
-    flight_schedule_dates.joins(:flight_schedule_prices).where(:origin_id => destination.id, :destination_id => origin.id).order("flight_schedule_prices.price ASC")
+    flight_schedule_dates.where(:origin_id => destination.id, :destination_id => origin.id)
   end
 
-  def lower_depart_flight_price
-    depart_flights_schedule_dates.first.flight_schedule_prices.first
+  def depart_flight_schedule_prices
+    depart_flights_schedule_dates.collect { |fsd| fsd.flight_schedule_prices }.flatten.sort_by { |fsp| fsp.price }.delete_if { |fsp| fsp.datetime < Time.current }
   end
 
-  def lower_return_flight_price
-    return_flights_schedule_dates.first.flight_schedule_prices.first
+  def return_flight_schedule_prices
+    depart_flights_schedule_dates.collect { |fsd| fsd.flight_schedule_prices }.flatten.sort_by { |fsp| fsp.price }.delete_if { |fsp| fsp.datetime < Time.current }
   end
 
   def lower_total_price
     modifier = adults * (children > 0 ? children * 0.6 : 1)
-    ((lower_depart_flight_price.price + lower_return_flight_price.price) * modifier) + (2 * DEPARTURE_TAX)
+    ((depart_flight_schedule_prices.first.price + return_flight_schedule_prices.first.price) * modifier) + (2 * DEPARTURE_TAX)
   end
 
   protected
