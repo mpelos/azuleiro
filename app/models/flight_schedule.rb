@@ -35,8 +35,8 @@ class FlightSchedule < ActiveRecord::Base
   end
 
   def lower_total_price
-    modifier = adults * (children > 0 ? children * 0.6 : 1)
-    ((depart_flight_schedule_prices.first.price + return_flight_schedule_prices.first.price) * modifier) + (2 * DEPARTURE_TAX)
+    modifier = adults + (children > 0 ? children * 0.6 : 1)
+    ((depart_flight_schedule_prices.first.price + return_flight_schedule_prices.first.price) * modifier) + ((adults + children) * 2 * DEPARTURE_TAX)
   end
 
   protected
