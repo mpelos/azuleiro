@@ -12,6 +12,7 @@
 cities = {}
 cities["Brasília"]      = "BSB"
 cities["Campinas"]      = "VCP"
+cities["Campo Grande"]  = "CGR"
 cities["Florianópolis"] = "FLN"
 cities["Joinville"]     = "JOI"
 cities["Recife"]        = "REC"
