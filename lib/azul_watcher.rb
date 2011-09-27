@@ -2,27 +2,31 @@ class AzulWatcher
   require 'headless'
 
   def update_flight_prices
-    headless = Headless.new
-    headless.start
+    flight_schedule_dates = FlightScheduleDate.where(["date >= ?", 2.hours.from_now])
 
-    @session = Capybara::Session.new(:webkit)
-    @session.visit("http://viajemais.voeazul.com.br")
+    if flight_schedule_dates.any?
+      headless = Headless.new
+      headless.start
 
-    select_one_way_radio
-    select_one_adult
+      @session = Capybara::Session.new(:webkit)
+      @session.visit("http://viajemais.voeazul.com.br")
 
-    FlightScheduleDate.where(["date >= ?", 2.hours.from_now]).each do |schedule|
-      select_origin_city      schedule.origin.code
-      select_destination_city schedule.destination.code
-      select_depart_date      schedule.date
-      @session.click_link "COMPRE AGORA"
+      select_one_way_radio
+      select_one_adult
 
-      @session.find(:xpath, "//table[@class='info-table']").text.split("\nvoo ").drop(1).each do |text|
-        localized_time = text.match(/\d{2}:\d{2}/).to_s
-        datetime = Time.utc schedule.date.year, schedule.date.month, schedule.date.day, localized_time[0, 2].to_i + 3, localized_time[3, 2], 0
-        price = text.match(/\d+,\d{2}/).to_s.sub!(",", ".").to_f
+      flight_schedule_dates.each do |schedule|
+        select_origin_city      schedule.origin.code
+        select_destination_city schedule.destination.code
+        select_depart_date      schedule.date
+        @session.click_link "COMPRE AGORA"
 
-        schedule.flight_schedule_prices.find_or_create_by_datetime(datetime).update_attribute :price, price
+        @session.find(:xpath, "//table[@class='info-table']").text.split("\nvoo ").drop(1).each do |text|
+          localized_time = text.match(/\d{2}:\d{2}/).to_s
+          datetime = Time.utc schedule.date.year, schedule.date.month, schedule.date.day, localized_time[0, 2].to_i + 3, localized_time[3, 2], 0
+          price = text.match(/\d+,\d{2}/).to_s.sub!(",", ".").to_f
+
+          schedule.flight_schedule_prices.find_or_create_by_datetime(datetime).update_attribute :price, price
+        end
       end
     end
   end
