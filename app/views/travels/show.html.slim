@@ -1,0 +1,38 @@
+= show_for @travel do |travel|
+  = travel.association :origin
+  = travel.association :destination
+
+  = travel.attribute :depart_at_range, :label => "Partindo" do
+    p = "De #{l @travel.start_depart_datetime}"
+    p = " a #{l @travel.end_depart_datetime}"
+
+  = travel.attribute :return_at_range, :label => "Retornando" do
+    p = "De #{l @travel.start_return_datetime}"
+    p = " a #{l @travel.end_return_datetime}"
+
+  = travel.attribute :adults
+  = travel.attribute :children
+  = travel.attribute :maximum_price do
+    = number_to_currency @travel.maximum_price
+
+  = travel.attribute :recipients
+
+  - if @travel.depart_schedules.any? && @travel.return_schedules.any?
+    h2 Melhor valor atual
+
+    table
+      thead
+        tr
+          th Partindo
+          th Retornando
+          th Valor
+
+      tbody
+        tr
+          td = l @travel.depart_schedules.first.datetime
+          td = l @travel.return_schedules.first.datetime
+          td = number_to_currency @travel.lower_total_price
+
+= link_to 'Editar', edit_travel_path(@travel)
+= " | "
+= link_to 'Voltar', travels_path

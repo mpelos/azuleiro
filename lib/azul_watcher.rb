@@ -5,24 +5,24 @@ class AzulWatcher
     headless = Headless.new
     headless.start
 
-    @session = Capybara::Session.new(:webkit)
+    @session = Capybara::Session.new(:selenium)
     @session.visit("http://viajemais.voeazul.com.br")
 
     select_one_way_radio
     select_one_adult
 
-    FlightScheduleDate.where(["date >= ?", 2.hours.from_now]).each do |schedule|
-      select_origin_city      schedule.origin.code
-      select_destination_city schedule.destination.code
-      select_depart_date      schedule.date
+    Flight.where(["date >= ?", 2.hours.from_now]).each do |flight|
+      select_origin_city      flight.origin.code
+      select_destination_city flight.destination.code
+      select_depart_date      flight.date
       @session.click_link "COMPRE AGORA"
 
       @session.find(:xpath, "//table[@class='info-table']").text.split("\nvoo ").drop(1).each do |text|
         localized_time = text.match(/\d{2}:\d{2}/).to_s
-        datetime = Time.utc(schedule.date.year, schedule.date.month, schedule.date.day, localized_time[0, 2], localized_time[3, 2], 0) + 3.hours
+        datetime = Time.utc(flight.date.year, flight.date.month, flight.date.day, localized_time[0, 2], localized_time[3, 2], 0) + 3.hours
         price = text.match(/\d+,\d{2}/).to_s.sub!(",", ".").to_f
 
-        schedule.flight_schedule_prices.find_or_create_by_datetime(datetime).update_attribute :price, price
+        flight.schedules.find_or_create_by_datetime(datetime).update_attribute :price, price
       end
     end
   end

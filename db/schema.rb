@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110926001048) do
+ActiveRecord::Schema.define(:version => 20111001004241) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(:version => 20110926001048) do
     t.datetime "updated_at"
   end
 
-  create_table "flight_schedule_dates", :force => true do |t|
+  create_table "flights", :force => true do |t|
     t.integer  "origin_id"
     t.integer  "destination_id"
     t.date     "date"
@@ -27,36 +27,34 @@ ActiveRecord::Schema.define(:version => 20110926001048) do
     t.datetime "updated_at"
   end
 
-  add_index "flight_schedule_dates", ["origin_id", "destination_id", "date"], :name => "index_on_origin_id_and_destination_id_and_date"
+  add_index "flights", ["origin_id", "destination_id", "date"], :name => "index_on_origin_id_and_destination_id_and_date"
 
-  create_table "flight_schedule_dates_flight_schedules", :id => false, :force => true do |t|
-    t.integer "flight_schedule_id"
-    t.integer "flight_schedule_date_id"
+  create_table "flights_travels", :id => false, :force => true do |t|
+    t.integer "travel_id"
+    t.integer "flight_id"
   end
 
-  create_table "flight_schedule_prices", :force => true do |t|
-    t.integer  "flight_schedule_date_id"
+  create_table "schedules", :force => true do |t|
+    t.integer  "flight_id"
     t.datetime "datetime"
     t.float    "price"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "flight_schedule_prices", ["flight_schedule_date_id", "datetime"], :name => "index_on_flight_schedule_date_id_and_datetime"
-
-  create_table "flight_schedules", :force => true do |t|
-    t.integer  "adults",                :default => 1
-    t.integer  "children",              :default => 0
-    t.float    "maximum_price"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "recipients"
+  create_table "travels", :force => true do |t|
+    t.integer  "origin_id"
+    t.integer  "destination_id"
     t.datetime "start_depart_datetime"
     t.datetime "end_depart_datetime"
     t.datetime "start_return_datetime"
     t.datetime "end_return_datetime"
-    t.integer  "origin_id"
-    t.integer  "destination_id"
+    t.integer  "adults",                :default => 1
+    t.integer  "children",              :default => 0
+    t.float    "maximum_price"
+    t.string   "recipients"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
