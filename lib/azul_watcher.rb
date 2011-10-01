@@ -5,7 +5,7 @@ class AzulWatcher
     headless = Headless.new
     headless.start
 
-    @session = Capybara::Session.new(:selenium)
+    @session = Capybara::Session.new(:webkit)
     @session.visit("http://viajemais.voeazul.com.br")
 
     select_one_way_radio
