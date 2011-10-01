@@ -229,7 +229,7 @@
 
   activerecord:
     models:
-       travel: "Agendamentos"
+       travel: "Viagens"
 
     attributes:
       travel:
