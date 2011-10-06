@@ -22,7 +22,9 @@ class AzulWatcher
         datetime = Time.utc(flight.date.year, flight.date.month, flight.date.day, localized_time[0, 2], localized_time[3, 2], 0) + 3.hours
         price = text.match(/\d+,\d{2}/).to_s.sub!(",", ".").to_f
 
-        flight.schedules.find_or_create_by_datetime(datetime).update_attribute :price, price
+        schedule = flight.schedules.find_or_create_by_datetime(datetime)
+        price = flight.prices.find_or_create_by_value(price)
+        schedule.price = price
       end
     end
   end

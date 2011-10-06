@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111001004241) do
+ActiveRecord::Schema.define(:version => 20111001203759) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -34,10 +34,17 @@ ActiveRecord::Schema.define(:version => 20111001004241) do
     t.integer "flight_id"
   end
 
+  create_table "prices", :force => true do |t|
+    t.integer  "flight_id"
+    t.integer  "schedule_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "schedules", :force => true do |t|
     t.integer  "flight_id"
     t.datetime "datetime"
-    t.float    "price"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
