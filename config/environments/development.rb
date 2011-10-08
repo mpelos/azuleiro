@@ -22,5 +22,8 @@ AzulChecker::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+  # HTML output pretty (indented) format
+  Slim::Engine.set_default_options :pretty => true
 end
 
