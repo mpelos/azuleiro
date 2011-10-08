@@ -3,4 +3,7 @@ jQuery(function($) {
   $('.datepicker').datepicker({
     selectOtherMonths: true
   });
+
+  // jQuery Time Entry
+  $('.time-entry').timeEntry( { show24Hours: true, spinnerImage: '' } );
 });
