@@ -4,15 +4,21 @@
 
   = f.attribute :depart_range, :label => "Partindo", :required => true do
     = f.label :start_depart_datetime
-    = f.datetime_select :start_depart_datetime
+    = f.text_field :start_depart_date
+    = f.text_field :start_depart_time
+
     = f.label :end_depart_datetime
-    = f.datetime_select :end_depart_datetime
+    = f.text_field :end_depart_date
+    = f.text_field :end_depart_time
 
   = f.attribute :return_range, :label => "Retornando", :required => true do
     = f.label :start_return_datetime
-    = f.datetime_select :start_return_datetime, :required => :false
+    = f.text_field :start_return_date
+    = f.text_field :start_return_time
+
     = f.label :end_return_datetime
-    = f.datetime_select :end_return_datetime
+    = f.text_field :end_return_date
+    = f.text_field :end_return_time
 
   = f.attribute :adults
   = f.attribute :children

@@ -1,7 +1,5 @@
-# encoding: UTF-8
-
 class Travel < ActiveRecord::Base
-  require "capybara"
+  extend DateTimeAccessors
 
   DEPARTURE_TAX = 16.23
 
@@ -9,12 +7,13 @@ class Travel < ActiveRecord::Base
   belongs_to              :destination, :class_name => "City", :foreign_key => "destination_id"
   has_and_belongs_to_many :flights
 
-  validates_presence_of :origin, :destination, :adults, :children, :maximum_price, :recipients
+  after_save        :find_or_create_flights
 
-  after_save :find_or_create_flights
+  validates_presence_of :origin, :destination, :adults, :children, :maximum_price, :recipients
 
   default_scope order("start_depart_datetime", "end_return_datetime")
 
+  split_date_and_time :start_depart_datetime, :end_depart_datetime, :start_return_datetime, :end_return_datetime
 
   def depart_flights
     flights.where(:origin_id => origin.id, :destination_id => destination.id)
