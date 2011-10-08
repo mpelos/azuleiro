@@ -11,7 +11,7 @@ class AzulWatcher
     select_one_way_radio
     select_one_adult
 
-    Flight.where(["date >= ?", 2.hours.from_now]).each do |flight|
+    Flight.where("date >= ?", Date.current).each do |flight|
       select_origin_city      flight.origin.code
       select_destination_city flight.destination.code
       select_depart_date      flight.date
