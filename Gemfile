@@ -42,4 +42,5 @@ gem 'whenever', :require => false
 
 group :development do
   gem 'capistrano'
+  gem 'ruby-debug19'
 end
