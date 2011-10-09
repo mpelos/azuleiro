@@ -1,28 +1,29 @@
-= simple_form_for @travel do |f|
-  = f.association :origin
-  = f.association :destination
+= simple_form_for @travel do |form|
+  = form.association :origin
+  = form.association :destination
 
-  = f.attribute :depart_range, :label => "Partindo", :required => true do
-    = f.label :start_depart_datetime
-    = f.text_field :start_depart_date, :class => :datepicker
-    = f.text_field :start_depart_time, :class => :'time-entry'
+  = form.attribute :depart_range, :label => "Partindo", :required => true do
+    .inline-inputs
+      = form.text_field :start_depart_date, :class => "small datepicker"
+      = form.text_field :start_depart_time, :class => "mini time-entry"
+      = " até "
+      = form.text_field :end_depart_date, :class => "small datepicker"
+      = form.text_field :end_depart_time, :class => "mini time-entry"
 
-    = f.label :end_depart_datetime
-    = f.text_field :end_depart_date, :class => :datepicker
-    = f.text_field :end_depart_time, :class => :'time-entry'
+  = form.attribute :return_range, :label => "Retornando", :required => true do
+    .inline-inputs
+      = form.text_field :start_return_date, :class => "small datepicker"
+      = form.text_field :start_return_time, :class => "mini time-entry"
+      = " até "
+      = form.text_field :end_return_date, :class => "small datepicker"
+      = form.text_field :end_return_time, :class => "mini time-entry"
 
-  = f.attribute :return_range, :label => "Retornando", :required => true do
-    = f.label :start_return_datetime
-    = f.text_field :start_return_date, :class => :datepicker
-    = f.text_field :start_return_time, :class => :'time-entry'
+  = form.attribute :adults, :input_html => { :class => "mini" }
+  = form.attribute :children, :input_html => { :class => "mini" }
+  = form.attribute :maximum_price, :input_html => { :class => "mini" }
+  = form.attribute :recipients, :input_html => { :class => "xlarge" }
 
-    = f.label :end_return_datetime
-    = f.text_field :end_return_date, :class => :datepicker
-    = f.text_field :end_return_time, :class => :'time-entry'
-
-  = f.attribute :adults
-  = f.attribute :children
-  = f.attribute :maximum_price
-  = f.attribute :recipients
-
-  = f.submit
+  .actions
+    = form.submit "Salvar", :class => "btn primary"
+    = " "
+    = link_to "Cancelar", travels_path, :class => "btn"

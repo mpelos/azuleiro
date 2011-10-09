@@ -1,4 +1,7 @@
-= show_for @travel do |travel|
+.page-header
+  h1 = "#{@travel.origin} / #{@travel.destination}"
+
+= show_for @travel, :builder => ShowFor::BootstrapBuilder do |travel|
   = travel.association :origin
   = travel.association :destination
 
@@ -18,7 +21,7 @@
   = travel.attribute :recipients
 
   - if @travel.depart_schedules.any? && @travel.return_schedules.any?
-    h2 Melhor valor atual
+    h3 Melhor valor atual
 
     table
       thead
