@@ -1,4 +1,4 @@
-# encoding: UFT-8
+# encoding: UTF-8
 
 class ScheduleMailer < ActionMailer::Base
   default :from => "verificador_azul@randomhost.com.br"
