@@ -7,11 +7,11 @@
 
   = travel.attribute :depart_at_range, :label => "Partindo" do
     p = "De #{l @travel.start_depart_datetime}"
-    p = " a #{l @travel.end_depart_datetime}"
+    p = " até #{l @travel.end_depart_datetime}"
 
   = travel.attribute :return_at_range, :label => "Retornando" do
     p = "De #{l @travel.start_return_datetime}"
-    p = " a #{l @travel.end_return_datetime}"
+    p = " até #{l @travel.end_return_datetime}"
 
   = travel.attribute :adults
   = travel.attribute :children
