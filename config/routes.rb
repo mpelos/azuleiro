@@ -1,6 +1,6 @@
 AzulChecker::Application.routes.draw do
   root :to => "travels#index"
-  resources :travels
+  resources :travels, :path => "viagens", :path_names => { :new => "nova", :edit => "editar" }
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
