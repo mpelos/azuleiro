@@ -26,6 +26,9 @@ html, body {
   .footer p {
     color: #555555; }
 
+td.currency {
+  text-align: right; }
+
 .inline-inputs input {
   margin: 0 3px; }
   .inline-inputs input:first-child {

@@ -23,7 +23,7 @@
           td
             = "de #{l travel.start_return_datetime, :format => :short}"
             = " até #{l travel.end_return_datetime, :format => :short}"
-          td
+          td.currency
             - if travel.depart_schedules.any? && travel.return_schedules.any?
               = number_to_currency travel.lower_total_price
 
