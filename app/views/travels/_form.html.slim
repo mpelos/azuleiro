@@ -4,18 +4,18 @@
 
   = form.attribute :depart_range, :label => "Partindo", :required => true do
     .inline-inputs
-      = form.text_field :start_depart_date, :class => "small datepicker"
+      = form.text_field :start_depart_date, :class => "small datepicker", :'data-order' => 1
       = form.text_field :start_depart_time, :class => "mini time-entry"
       = " até "
-      = form.text_field :end_depart_date, :class => "small datepicker"
+      = form.text_field :end_depart_date, :class => "small datepicker", :'data-order' => 2
       = form.text_field :end_depart_time, :class => "mini time-entry"
 
   = form.attribute :return_range, :label => "Retornando", :required => true do
     .inline-inputs
-      = form.text_field :start_return_date, :class => "small datepicker"
+      = form.text_field :start_return_date, :class => "small datepicker", :'data-order' => 3
       = form.text_field :start_return_time, :class => "mini time-entry"
       = " até "
-      = form.text_field :end_return_date, :class => "small datepicker"
+      = form.text_field :end_return_date, :class => "small datepicker", :'data-order' => 4
       = form.text_field :end_return_time, :class => "mini time-entry"
 
   = form.attribute :adults, :input_html => { :class => "mini" }
