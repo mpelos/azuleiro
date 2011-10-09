@@ -52,6 +52,6 @@ class Travel < ActiveRecord::Base
     end
 
     def find_schedules_by_sql(origin_id, destination_id)
-      Schedule.find_by_sql "SELECT `schedules`.* FROM `schedules` INNER JOIN `prices` ON `schedules`.`id` = `prices`.`schedule_id` INNER JOIN `flights` ON `schedules`.`flight_id` = `flights`.`id` INNER JOIN `flights_travels` ON `flights`.`id` = `flights_travels`.`flight_id` INNER JOIN `travels` ON `travels`.`id` =  `flights_travels`.`travel_id` WHERE `travels`.`id` = #{id} AND `flights`.`origin_id` = #{origin_id} AND `flights`.`destination_id` = #{destination_id} AND `schedules`.`datetime` >= '#{Time.current}' ORDER BY `prices`.`value`"
+      Schedule.find_by_sql "SELECT `schedules`.* FROM `schedules` INNER JOIN `prices` ON `schedules`.`id` = `prices`.`schedule_id` INNER JOIN `flights` ON `schedules`.`flight_id` = `flights`.`id` INNER JOIN `flights_travels` ON `flights`.`id` = `flights_travels`.`flight_id` INNER JOIN `travels` ON `travels`.`id` =  `flights_travels`.`travel_id` WHERE `travels`.`id` = #{id} AND `flights`.`origin_id` = #{origin_id} AND `flights`.`destination_id` = #{destination_id} AND `schedules`.`datetime` >= '#{Time.current}' AND `prices`.`value` <> 0 ORDER BY `prices`.`value`"
     end
 end
