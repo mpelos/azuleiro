@@ -1,8 +1,6 @@
 class Travel < ActiveRecord::Base
   extend DateTimeAccessors
 
-  DEPARTURE_TAX = 16.23
-
   belongs_to              :origin,      :class_name => "City", :foreign_key => "origin_id"
   belongs_to              :destination, :class_name => "City", :foreign_key => "destination_id"
   has_and_belongs_to_many :flights
@@ -31,9 +29,16 @@ class Travel < ActiveRecord::Base
     find_schedules_by_sql destination.id, origin.id
   end
 
+  def lower_depart_price
+    price_modifier * depart_schedules.first.price.value
+  end
+
+  def lower_return_price
+    price_modifier * return_schedules.first.price.value
+  end
+
   def lower_total_price
-    modifier = adults + (children * 0.6)
-    ((depart_schedules.first.price.value + return_schedules.first.price.value) * modifier) + ((adults + children) * 2 * DEPARTURE_TAX)
+    lower_depart_price + lower_return_price
   end
 
   protected
@@ -53,5 +58,9 @@ class Travel < ActiveRecord::Base
 
     def find_schedules_by_sql(origin_id, destination_id)
       Schedule.find_by_sql "SELECT `schedules`.* FROM `schedules` INNER JOIN `prices` ON `schedules`.`id` = `prices`.`schedule_id` INNER JOIN `flights` ON `schedules`.`flight_id` = `flights`.`id` INNER JOIN `flights_travels` ON `flights`.`id` = `flights_travels`.`flight_id` INNER JOIN `travels` ON `travels`.`id` =  `flights_travels`.`travel_id` WHERE `travels`.`id` = #{id} AND `flights`.`origin_id` = #{origin_id} AND `flights`.`destination_id` = #{destination_id} AND `schedules`.`datetime` >= '#{Time.current}' AND `prices`.`value` <> 0 ORDER BY `prices`.`value`"
+    end
+
+    def price_modifier
+      adults + (children * 0.6)
     end
 end

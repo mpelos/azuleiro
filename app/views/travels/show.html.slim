@@ -2,9 +2,6 @@
   h1 = "#{@travel.origin} / #{@travel.destination}"
 
 = show_for @travel, :builder => ShowFor::BootstrapBuilder do |travel|
-  = travel.association :origin
-  = travel.association :destination
-
   = travel.attribute :depart_at_range, :label => "Partindo" do
     p = "De #{l @travel.start_depart_datetime}"
     p = " até #{l @travel.end_depart_datetime}"
@@ -21,20 +18,27 @@
   = travel.attribute :recipients
 
   - if @travel.depart_schedules.any? && @travel.return_schedules.any?
-    h3 Melhor valor atual
+    h2 Viagem com menor preço
 
-    table
-      thead
-        tr
-          th Partindo
-          th Retornando
-          th Valor
+    h3 Partindo
+    .row
+      .span5
+        p= l @travel.depart_schedules.first.datetime
 
-      tbody
-        tr
-          td = l @travel.depart_schedules.first.datetime
-          td = l @travel.return_schedules.first.datetime
-          td = number_to_currency @travel.lower_total_price
+      .span2
+        p= number_to_currency @travel.lower_depart_price
+
+    h3 Retornando
+    .row
+      .span5
+        p= l @travel.return_schedules.first.datetime
+
+      .span2
+        p= number_to_currency @travel.lower_return_price
+
+    h3 style="margin-bottom: 20px"
+      = "Total: #{number_to_currency @travel.lower_total_price}"
+      small(style="margin-left: 10px") Esse valor não inclui as taxas de embarque. Confira o valor real no site da Azul.
 
 = link_to 'Editar', edit_travel_path(@travel)
 = " | "
