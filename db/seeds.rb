@@ -17,6 +17,7 @@ cities["Curitiba"]      = "CWB"
 cities["Florianópolis"] = "FLN"
 cities["Joinville"]     = "JOI"
 cities["Recife"]        = "REC"
+cities["Vitória"]       = "VIX"
 
 cities.each_pair do |name, code|
   City.find_or_create_by_name_and_code(name, code)
