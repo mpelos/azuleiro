@@ -239,8 +239,12 @@
         end_depart_datetime: "a"
         start_return_datetime: "de"
         end_return_datetime: "a"
-        adults: "Qde. de Adultos"
-        children: "Qde. de crianças"
+        adults:
+          one: "adulto"
+          other: "adultos"
+        children:
+          one: "criança"
+          other: "crianças"
         maximum_price: "Preço máximo"
         recipients: "E-mails"
 
