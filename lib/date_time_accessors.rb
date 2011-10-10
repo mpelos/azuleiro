@@ -28,7 +28,7 @@ module DateTimeAccessors
 
       before_validation do
         if instance_variable_get("@#{date}").present?
-          self.send "#{attribute}=", DateTime.strptime([instance_variable_get("@#{date}"), instance_variable_get("@#{time}")].join(" "), "%d/%m/%Y %H:%M") + 3.hours
+          self.send "#{attribute}=", DateTime.strptime([instance_variable_get("@#{date}"), instance_variable_get("@#{time}")].join(" "), "%d/%m/%Y %H:%M").to_formatted_s(:db)
         end
       end
     end
