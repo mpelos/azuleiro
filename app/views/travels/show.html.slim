@@ -1,4 +1,8 @@
 .page-header
+  .pull-right
+    = link_to "Editar", edit_travel_path(@travel), :class => "btn", :style => "float: right; margin-top: 5px;"
+    = link_to "Voltar", travels_path, :style => "float: right; margin: 12px 10px 0 0;"
+
   h1 = "#{@travel.origin} / #{@travel.destination}"
 
 = show_for @travel, :builder => ShowFor::BootstrapBuilder do |travel|
@@ -17,7 +21,3 @@
       = " e #{@travel.children} #{t "activerecord.attributes.travel.children", :count => @travel.children}"
 
   == render "travel_with_lower_price"
-
-= link_to 'Editar', edit_travel_path(@travel)
-= " | "
-= link_to 'Voltar', travels_path

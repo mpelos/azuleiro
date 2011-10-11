@@ -1,4 +1,5 @@
 .page-header
+  .pull-right = link_to 'Nova Viagem', new_travel_path, :class => "btn primary", :style => "margin-top: 5px"
   h1 = Travel.model_name.human
 
 - if @travels.any?
@@ -35,4 +36,3 @@
 - else
   p Não há nenhuma viagem cadastrada.
 
-= link_to 'Nova Viagem', new_travel_path, :class => "btn primary"
