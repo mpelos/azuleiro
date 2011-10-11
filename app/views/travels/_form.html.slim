@@ -18,8 +18,8 @@
       = form.text_field :end_return_date, :class => "small datepicker", :'data-order' => 4
       = form.text_field :end_return_time, :class => "mini time-entry"
 
-  = form.attribute :adults, :input_html => { :class => "mini" }
-  = form.attribute :children, :input_html => { :class => "mini" }
+  = form.attribute :adults, :label => Travel.human_attribute_name(:adults, :count => :many), :input_html => { :class => "mini" }
+  = form.attribute :children, :label => Travel.human_attribute_name(:children, :count => :many), :input_html => { :class => "mini" }
   = form.attribute :maximum_price, :input_html => { :class => "small" }
   = form.attribute :recipients, :input_html => { :class => "xlarge" }
 

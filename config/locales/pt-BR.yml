@@ -240,11 +240,11 @@
         start_return_datetime: "de"
         end_return_datetime: "a"
         adults:
-          one: "adulto"
-          other: "adultos"
+          one: "Adulto"
+          other: "Adultos"
         children:
-          one: "criança"
-          other: "crianças"
+          one: "Criança"
+          other: "Crianças"
         maximum_price: "Preço máximo"
         recipients: "E-mails"
 

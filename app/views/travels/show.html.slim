@@ -16,8 +16,8 @@
 
   h3 Passageiros
   p
-    = "#{@travel.adults} #{Travel.human_attribute_name :adults, :count => @travel.adults}"
+    = "#{@travel.adults} #{Travel.human_attribute_name(:adults, :count => @travel.adults).downcase}"
     - unless @travel.children.zero?
-      = " e #{@travel.children} #{t "activerecord.attributes.travel.children", :count => @travel.children}"
+      = " e #{@travel.children} #{Travel.human_attribute_name(:children, :count => @travel.children).downcase}"
 
   == render "travel_with_lower_price"
