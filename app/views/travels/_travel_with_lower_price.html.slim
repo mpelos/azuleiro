@@ -1,0 +1,35 @@
+h2 Viagem com menor preço
+h5 == "Será enviado um e-mail para #{mail_to_recipients @travel.recipients} quando o valor total for inferior à #{number_to_currency @travel.maximum_price}."
+
+- if @travel.depart_schedules.any? || @travel.return_schedules.any?
+  h3 Partindo
+  - if @travel.depart_schedules.any?
+    .row
+      .span5
+        p= l @travel.depart_schedules.first.datetime
+
+      .span2
+        p= number_to_currency @travel.lower_depart_price
+
+  - else
+    p Não há nenhuma viagem disponível
+
+  h3 Retornando
+  - if @travel.return_schedules.any?
+    .row
+      .span5
+        p= l @travel.return_schedules.first.datetime
+
+      .span2
+        p= number_to_currency @travel.lower_return_price
+
+  - else
+    p Não há nenhuma viagem disponível
+
+  - if @travel.lower_total_price
+    h3
+      = "Total: #{number_to_currency @travel.lower_total_price}"
+      small(style="margin-left: 10px") Esse valor não inclui as taxas de embarque. Confira o valor real no site da Azul.
+
+- else
+  p Não há viagens disponíveis

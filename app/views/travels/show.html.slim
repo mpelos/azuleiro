@@ -16,30 +16,7 @@
     - unless @travel.children.zero?
       = " e #{@travel.children} #{t "activerecord.attributes.travel.children", :count => @travel.children}"
 
-  - if @travel.depart_schedules.any? && @travel.return_schedules.any?
-    h2 Viagem com menor preço
-    h5 == "Será enviado um e-mail para #{mail_to_recipients @travel.recipients} quando o valor total for inferior à #{number_to_currency @travel.maximum_price}."
-
-    h3 Partindo
-    .row
-      .span5
-        p= l @travel.depart_schedules.first.datetime
-
-      .span2
-        p= number_to_currency @travel.lower_depart_price
-
-    h3 Retornando
-    .row
-      .span5
-        p= l @travel.return_schedules.first.datetime
-
-      .span2
-        p= number_to_currency @travel.lower_return_price
-
-    h3
-      = "Total: #{number_to_currency @travel.lower_total_price}"
-      small(style="margin-left: 10px") Esse valor não inclui as taxas de embarque. Confira o valor real no site da Azul.
-
+  == render "travel_with_lower_price"
 
 = link_to 'Editar', edit_travel_path(@travel)
 = " | "
