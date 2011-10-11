@@ -10,7 +10,7 @@
         th = Travel.human_attribute_name :destination
         th Partindo
         th Retornando
-        th Melhor Valor Atual
+        th.currency Preço Total
         th
 
     tbody
@@ -18,15 +18,9 @@
         tr
           td = travel.origin
           td = travel.destination
-          td
-            = "de #{l travel.start_depart_datetime, :format => :short}"
-            = " até #{l travel.end_depart_datetime, :format => :short}"
-          td
-            = "de #{l travel.start_return_datetime, :format => :short}"
-            = " até #{l travel.end_return_datetime, :format => :short}"
-          td.currency
-            - if travel.depart_schedules.any? && travel.return_schedules.any?
-              = number_to_currency travel.lower_total_price
+          td = travel.depart_schedules.any? ? l(travel.depart_schedules.first.datetime, :format => :short) : "Indisponível"
+          td = travel.return_schedules.any? ? l(travel.return_schedules.first.datetime, :format => :short) : "Indisponível"
+          td.currency = number_to_currency travel.lower_total_price
 
           td
             = link_to 'Visualizar', travel, :style => "margin-right:10px"
