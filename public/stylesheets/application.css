@@ -26,6 +26,10 @@ html, body {
   .footer p {
     color: #555555; }
 
+td.links {
+  text-align: center;
+  width: 160px; }
+
 th.currency, td.currency {
   text-align: right; }
 

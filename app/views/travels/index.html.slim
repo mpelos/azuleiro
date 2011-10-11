@@ -22,7 +22,7 @@
           td = travel.return_schedules.any? ? l(travel.return_schedules.first.datetime, :format => :short) : "Indisponível"
           td.currency = number_to_currency travel.lower_total_price
 
-          td
+          td.links
             = link_to 'Visualizar', travel, :style => "margin-right:10px"
             = link_to 'Editar', edit_travel_path(travel), :style => "margin-right:10px"
             = link_to 'Excluir', travel, :confirm => 'Você tem certeza?', :method => :delete
