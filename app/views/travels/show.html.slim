@@ -7,12 +7,12 @@
 
 = show_for @travel, :builder => ShowFor::BootstrapBuilder do |travel|
   = travel.attribute :depart_at_range, :label => "Partindo" do
-    p = "De #{l @travel.start_depart_datetime}"
-    p = " até #{l @travel.end_depart_datetime}"
+    p = "De #{l(@travel.start_depart_datetime).downcase}"
+    p = " até #{l(@travel.end_depart_datetime).downcase}"
 
   = travel.attribute :return_at_range, :label => "Retornando" do
-    p = "De #{l @travel.start_return_datetime}"
-    p = " até #{l @travel.end_return_datetime}"
+    p = "De #{l(@travel.start_return_datetime).downcase}"
+    p = " até #{l(@travel.end_return_datetime).downcase}"
 
   h3 Passageiros
   p
