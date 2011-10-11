@@ -5,7 +5,7 @@ h5 == "Será enviado um e-mail para #{mail_to_recipients @travel.recipients} qua
   h3 Partindo
   - if @travel.depart_schedules.any?
     .row
-      .span5
+      .span6
         p= l @travel.depart_schedules.first.datetime
 
       .span2
@@ -17,7 +17,7 @@ h5 == "Será enviado um e-mail para #{mail_to_recipients @travel.recipients} qua
   h3 Retornando
   - if @travel.return_schedules.any?
     .row
-      .span5
+      .span6
         p= l @travel.return_schedules.first.datetime
 
       .span2
