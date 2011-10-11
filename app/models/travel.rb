@@ -30,15 +30,17 @@ class Travel < ActiveRecord::Base
   end
 
   def lower_depart_price
-    price_modifier * depart_schedules.first.price.value
+    price_modifier * depart_schedules.first.price.value if depart_schedules.any?
   end
 
   def lower_return_price
-    price_modifier * return_schedules.first.price.value
+    price_modifier * return_schedules.first.price.value if return_schedules.any?
   end
 
   def lower_total_price
-    lower_depart_price + lower_return_price
+    if lower_depart_price.present? && lower_return_price.present?
+      lower_depart_price + lower_return_price
+    end
   end
 
   protected
