@@ -15,16 +15,16 @@ class AzulWatcher
       select_origin_city      flight.origin.code
       select_destination_city flight.destination.code
       select_depart_date      flight.date
-      @session.click_link "COMPRE AGORA"
+      @session.click_link     "COMPRE AGORA"
 
       if @session.has_xpath? "//table[@class='info-table']"
         @session.find(:xpath, "//table[@class='info-table']").text.split("\nvoo ").drop(1).each do |text|
           localized_time = text.match(/\d{2}:\d{2}/).to_s
           datetime = Time.utc(flight.date.year, flight.date.month, flight.date.day, localized_time[0, 2], localized_time[3, 2], 0).to_formatted_s(:db)
-          price = text.match(/\d+,\d{2}/).to_s.sub!(",", ".").to_f
+          price = Price.find_or_create_by_value(text.match(/\d+,\d{2}/).to_s.sub!(",", ".").to_f)
 
+          flight.prices << price
           schedule = flight.schedules.find_or_create_by_datetime(datetime)
-          price = flight.prices.find_or_create_by_value(price)
           schedule.price = price
         end
       end
