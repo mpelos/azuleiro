@@ -22,7 +22,7 @@ class Travel < ActiveRecord::Base
   end
 
   def avaliable_schedules(origin_id, destination_id, minimum_datetime, maximum_datetime)
-    Schedule.find_by_sql "SELECT `schedules`.* FROM `schedules` INNER JOIN `prices` ON `schedules`.`id` = `prices`.`schedule_id` INNER JOIN `flights` ON `schedules`.`flight_id` = `flights`.`id` INNER JOIN `flights_travels` ON `flights`.`id` = `flights_travels`.`flight_id` INNER JOIN `travels` ON `travels`.`id` =  `flights_travels`.`travel_id` WHERE `travels`.`id` = #{id} AND `flights`.`origin_id` = #{origin_id} AND `flights`.`destination_id` = #{destination_id} AND `schedules`.`datetime` BETWEEN '#{minimum_datetime.utc.to_formatted_s(:db)}' AND '#{maximum_datetime.utc.to_formatted_s(:db)}' AND `prices`.`value` <> 0 ORDER BY `prices`.`value`"
+    Schedule.find_by_sql "SELECT `schedules`.* FROM `schedules` INNER JOIN `prices` ON `schedules`.`id` = `prices`.`schedule_id` INNER JOIN `flights` ON `schedules`.`flight_id` = `flights`.`id` INNER JOIN `flights_travels` ON `flights`.`id` = `flights_travels`.`flight_id` INNER JOIN `travels` ON `travels`.`id` =  `flights_travels`.`travel_id` WHERE `travels`.`id` = #{id} AND `flights`.`origin_id` = #{origin_id} AND `flights`.`destination_id` = #{destination_id} AND `schedules`.`datetime` BETWEEN '#{minimum_datetime.utc.to_formatted_s(:db)}' AND '#{maximum_datetime.utc.to_formatted_s(:db)}' AND `schedules`.`datetime` >= '#{2.hours.from_now.utc.to_formatted_s(:db)}' AND `prices`.`value` <> 0 ORDER BY `prices`.`value`"
   end
 
   def depart_schedules
