@@ -6,8 +6,6 @@ module DateTimeAccessors
       date = attribute.to_s.sub("datetime", "date")
       time = attribute.to_s.sub("datetime", "time")
 
-      debugger
-
       define_method date do
         send(attribute).present? ? send(attribute).strftime("%d/%m/%Y") : Date.current.strftime("%d/%m/%Y")
       end
