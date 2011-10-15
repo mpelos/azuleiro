@@ -1,6 +1,6 @@
 class Schedule < ActiveRecord::Base
   belongs_to :flight
-  has_one    :price
+  has_one    :price, :dependent => :destroy
 
   default_scope order("flight_id", "datetime")
 
