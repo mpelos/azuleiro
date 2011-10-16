@@ -6,15 +6,19 @@
   h1 = "#{@travel.origin} / #{@travel.destination}"
 
 = show_for @travel, :builder => ShowFor::BootstrapBuilder do |travel|
-  = travel.attribute :depart_at_range, :label => "Partindo" do
-    p = "De #{l(@travel.start_depart_datetime).downcase}"
-    p = " até #{l(@travel.end_depart_datetime).downcase}"
+  h2 Disponibilidade de Viagem
+  .row
+    .span4
+      = travel.attribute :depart_at_range, :label => "Partindo" do
+        p = "De #{l(@travel.start_depart_datetime, :format => :short).downcase}"
+        p = " até #{l(@travel.end_depart_datetime, :format => :short).downcase}"
 
-  = travel.attribute :return_at_range, :label => "Retornando" do
-    p = "De #{l(@travel.start_return_datetime).downcase}"
-    p = " até #{l(@travel.end_return_datetime).downcase}"
+    .span6
+      = travel.attribute :return_at_range, :label => "Retornando" do
+        p = "De #{l(@travel.start_return_datetime, :format => :short).downcase}"
+        p = " até #{l(@travel.end_return_datetime, :format => :short).downcase}"
 
-  h3 Passageiros
+  h2 Passageiros
   p
     = "#{@travel.adults} #{Travel.human_attribute_name(:adults, :count => @travel.adults).downcase}"
     - unless @travel.children.zero?
