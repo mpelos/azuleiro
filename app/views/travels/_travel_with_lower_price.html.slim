@@ -26,9 +26,8 @@ h2 Viagem com menor preço
     p Não há nenhuma viagem disponível
 
   - if @travel.lower_total_price
-    h3
-      = "Total: #{number_to_currency @travel.lower_total_price}"
-      small(style="margin-left: 10px") Esse valor não inclui as taxas de embarque. Confira o valor real no site da Azul.
+    h3= "Total: #{number_to_currency @travel.lower_total_price}*"
+    p * Esse valor não inclui taxas de embarque. Confira o valor real no site da Azul.
 
 - else
   p Não há viagens disponíveis
