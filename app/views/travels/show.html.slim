@@ -5,6 +5,8 @@
 
   h1 = "#{@travel.origin} / #{@travel.destination}"
 
+p(class="alert-message block-message info") == "Será enviado um e-mail para #{mail_to_recipients @travel.recipients} quando o valor total for inferior à <strong>#{number_to_currency @travel.maximum_price}</strong>."
+
 = show_for @travel, :builder => ShowFor::BootstrapBuilder do |travel|
   h2 Disponibilidade de Viagem
   .row
