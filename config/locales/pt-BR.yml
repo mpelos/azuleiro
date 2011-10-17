@@ -213,7 +213,7 @@
       confirmation: "não está de acordo com a confirmação"
       accepted: "deve ser aceito"
       empty: "não pode ficar vazio"
-      blank: "não pode ficar em branco"
+      blank: "é necessário"
       too_long: "é muito longo (máximo: %{count} caracteres)"
       too_short: "é muito curto (mínimo: %{count} caracteres)"
       wrong_length: "não possui o tamanho esperado (%{count} caracteres)"
@@ -233,8 +233,8 @@
 
     attributes:
       travel:
-        origin: "Origem"
-        destination: "Destino"
+        origin: "Cidade de origem"
+        destination: "Cidade de destino"
         start_depart_datetime: "de"
         end_depart_datetime: "a"
         start_return_datetime: "de"

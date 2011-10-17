@@ -9,6 +9,7 @@
       = " até "
       = form.text_field :end_depart_date, :class => "small datepicker", :'data-order' => 2
       = form.text_field :end_depart_time, :class => "mini time-entry"
+    span.help-block Coloque aqui sua disponibilidade para viagem de partida
 
   = form.attribute :return_range, :label => "Retornando", :required => true do
     .inline-inputs
@@ -17,11 +18,17 @@
       = " até "
       = form.text_field :end_return_date, :class => "small datepicker", :'data-order' => 4
       = form.text_field :end_return_time, :class => "mini time-entry"
+    span.help-block Coloque aqui sua disponibilidade para viagem de retorno
 
   = form.attribute :adults, :label => Travel.human_attribute_name(:adults, :count => :many), :input_html => { :class => "mini" }
   = form.attribute :children, :label => Travel.human_attribute_name(:children, :count => :many), :input_html => { :class => "mini" }
-  = form.attribute :maximum_price, :input_html => { :class => "small" }
-  = form.attribute :recipients, :input_html => { :class => "xlarge" }
+  = form.attribute :maximum_price,                       \
+                   :input_html => { :class => "small" }, \
+                   :hint => "Será enviado um e-mail para cada e-mail cadastrado quando o preço da viagem for inferior ao preço máximo"
+
+  = form.attribute :recipients,                           \
+                   :input_html => { :class => "xlarge" }, \
+                   :hint => "Separe os e-mails por vírgulas. Ex: joao@exemplo.com, jose@exemplo.com, maria@exemplo.com"
 
   .actions
     = form.submit "Salvar", :class => "btn primary"

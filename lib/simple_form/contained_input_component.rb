@@ -2,7 +2,7 @@ module SimpleForm
   module Components
     module ContainedInput
       def contained_input
-        '<div class="input">' + input + (error.nil? ? '' : error) + '</div>'
+        '<div class="input">' + input + (error.nil? ? (hint.nil? ? '' : hint) : error) +'</div>'
       end
     end
   end

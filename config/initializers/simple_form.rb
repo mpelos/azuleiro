@@ -6,10 +6,10 @@ SimpleForm.setup do |config|
   config.components = [ :label, :contained_input ]
 
   # Default tag used on hints.
-  # config.hint_tag = :span
+  config.hint_tag = :span
 
   # CSS class to add to all hint tags.
-  # config.hint_class = :hint
+  config.hint_class = 'help-block'
 
   # CSS class used on errors.
   # config.error_class = :error
