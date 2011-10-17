@@ -7,7 +7,7 @@ module DateTimeAccessors
       time = attribute.to_s.sub("datetime", "time")
 
       define_method date do
-        send(attribute).present? ? send(attribute).strftime("%d/%m/%Y") : Date.current.strftime("%d/%m/%Y")
+        send(attribute).present? ? send(attribute).strftime("%d/%m/%Y") : Date.tomorrow.strftime("%d/%m/%Y")
       end
 
       define_method time do
