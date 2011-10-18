@@ -37,3 +37,20 @@ th.currency, td.currency {
   margin: 0 3px; }
   .inline-inputs input:first-child {
     margin-left: 0; }
+
+#login {
+  margin: 50px auto 0;
+  width: 358px; }
+  #login .alert-message {
+    margin-bottom: 0; }
+  #login #remember_me_label {
+    float: none;
+    margin-left: 5px; }
+  #login .input {
+    margin-left: 80px; }
+  #login label {
+    width: auto; }
+  #login input[type="submit"] {
+    float: right;
+    padding: 9px 20px;
+    width: auto; }

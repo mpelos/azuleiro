@@ -20,6 +20,17 @@ html
         .container
           h3 = link_to "Azuleiro", root_path, :class => :brand
 
+          - if current_user
+            ul class="nav"
+              li = link_to "Viagens", travels_path
+
+            ul class="nav secondary-nav"
+              li = link_to "Sair", logout_path
+
+          - else
+            ul class="nav secondary-nav"
+              li = link_to "Cadastre-se", signup_path
+
     #root
       .container
         = yield

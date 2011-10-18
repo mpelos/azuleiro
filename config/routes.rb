@@ -1,6 +1,14 @@
 AzulChecker::Application.routes.draw do
-  root :to => "travels#index"
-  resources :travels, :path => "viagens", :path_names => { :new => "nova", :edit => "editar" }
+  get "signup" => "users#new",        :as => :signup, :path => "cadastre-se"
+  get "login"  => "sessions#new",     :as => :login
+  get "logout" => "sessions#destroy", :as => :logout
+
+  resources :users,    :path => "usuarios", :path_names => { :new => "novo" }, :except => :show
+  resources :sessions, :path => "login",    :only => [:index, :new, :create]
+  resources :travels,  :path => "viagens",  :path_names => { :new => "nova", :edit => "editar" }
+
+  root :to => "sessions#new",  :constraints => UserLoggedConstraint.new(false)
+  root :to => "travels#index", :constraints => UserLoggedConstraint.new(true)
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

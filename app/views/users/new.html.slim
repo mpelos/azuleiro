@@ -1,0 +1,12 @@
+.page-header
+  h1 Cadastre-se
+
+= simple_form_for @user do |form|
+  = form.attribute :email
+  = form.attribute :password
+  = form.attribute :password_confirmation
+
+  .actions
+    = form.submit "Cadastrar", :class => "btn primary"
+    = " "
+    = link_to "Cancelar", login_path, :class => "btn"

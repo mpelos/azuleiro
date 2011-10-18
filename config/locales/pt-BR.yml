@@ -229,9 +229,15 @@
 
   activerecord:
     models:
+       user: "Usuários"
        travel: "Viagens"
 
     attributes:
+      user:
+        email: "E-mail"
+        password: "Senha"
+        password_confirmation: "Confirme sua senha"
+
       travel:
         origin: "Cidade de origem"
         destination: "Cidade de destino"

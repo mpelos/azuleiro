@@ -31,6 +31,7 @@ gem 'show_for'
 gem 'simple_form'
 gem 'slim'
 gem 'slim-rails'
+gem 'sorcery'
 gem 'whenever', :require => false
 
 # Bundle gems for the local environment. Make sure to

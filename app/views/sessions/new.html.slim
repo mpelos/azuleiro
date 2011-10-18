@@ -1,0 +1,23 @@
+#login
+  .page-header
+    h1 Login
+
+  - if flash[:alert]
+    div class="alert-message error"
+      = flash[:alert]
+
+  fieldset
+    = form_tag sessions_path do
+      .clearfix
+        = label_tag :email, "E-mail"
+        .input= text_field_tag :email, "", :class => "xlarge"
+
+      .clearfix
+        = label_tag :password, "Senha"
+        .input= password_field_tag :password, "", :class => "xlarge"
+
+      .clearfix
+        .input
+          = check_box_tag :remember_me, 1, params[:remember_me]
+          = label_tag :remember_me, "Lembrar-me", :id => "remember_me_label"
+          = submit_tag "Login", :class => "btn large"
