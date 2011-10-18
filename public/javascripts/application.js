@@ -27,4 +27,7 @@ jQuery(function($) {
 
   // jQuery Time Entry
   $('.time-entry').timeEntry( { show24Hours: true, spinnerImage: '' } );
+
+  // Twitter's Bootstrap
+  $('.alert-message').alert();
 });

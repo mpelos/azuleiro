@@ -19,7 +19,7 @@ class TravelsController < ApplicationController
     @travel = Travel.new(params[:travel])
 
     if @travel.save
-      redirect_to @travel, :notice => 'Travel was successfully created.'
+      redirect_to @travel, :notice => "Sua viagem foi cadastrada com sucesso."
     else
       render :action => "new"
     end
@@ -29,7 +29,7 @@ class TravelsController < ApplicationController
     @travel = Travel.find(params[:id])
 
     if @travel.update_attributes(params[:travel])
-      redirect_to @travel, :notice => 'Travel was successfully updated.'
+      redirect_to @travel, :notice => "Sua viagem foi alterada com sucesso."
     else
       render :action => "edit"
     end
