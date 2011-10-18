@@ -27,7 +27,7 @@
                    :hint => "Será enviado um e-mail para cada e-mail cadastrado quando o preço da viagem for inferior ao preço máximo"
 
   = form.attribute :recipients,                           \
-                   :input_html => { :class => "xlarge" }, \
+                   :input_html => { :class => "xlarge", :value => form.object.recipients.nil? ? current_user.email : form.object.recipients }, \
                    :hint => "Separe os e-mails por vírgulas. Ex: joao@exemplo.com, jose@exemplo.com, maria@exemplo.com"
 
   .actions
