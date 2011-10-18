@@ -12,6 +12,7 @@ html
                              "jquery-ui-1.8.16.custom.min", \
                              "jquery.ui.datepicker-pt-BR",  \
                              "jquery.timeentry.min",        \
+                             "bootstrap-dropdown",          \
                              "bootstrap-alerts"
     = csrf_meta_tag
 
@@ -26,7 +27,10 @@ html
               li = link_to "Viagens", travels_path
 
             ul class="nav secondary-nav"
-              li = link_to "Sair", logout_path
+              li.menu
+                = link_to current_user.email, "#", :class => "menu"
+                ul.menu-dropdown
+                  = link_to "Sair", logout_path
 
           - else
             ul class="nav secondary-nav"

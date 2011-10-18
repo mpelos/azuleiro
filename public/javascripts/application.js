@@ -30,4 +30,5 @@ jQuery(function($) {
 
   // Twitter's Bootstrap
   $('.alert-message').alert();
+  $('.topbar').dropdown();
 });
