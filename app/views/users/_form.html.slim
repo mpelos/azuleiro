@@ -1,0 +1,10 @@
+= simple_form_for @user do |form|
+  - if form.object.new_record?
+    = form.attribute :email
+  = form.attribute :password
+  = form.attribute :password_confirmation
+
+  .actions
+    = form.submit "Cadastrar", :class => "btn primary"
+    = " "
+    = link_to "Cancelar", login_path, :class => "btn"

@@ -20,4 +20,8 @@ class UsersController < ApplicationController
       render :new
     end
   end
+
+  def edit
+    @user = current_user
+  end
 end
