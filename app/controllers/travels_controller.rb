@@ -39,6 +39,6 @@ class TravelsController < ApplicationController
     @travel = current_user.travels.find(params[:id])
     @travel.destroy
 
-    format.html redirect_to(travels_url)
+    redirect_to travels_url
   end
 end
