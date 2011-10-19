@@ -3,11 +3,12 @@
 class Travel < ActiveRecord::Base
   extend DateTimeAccessors
 
+  belongs_to              :user
   belongs_to              :origin,      :class_name => "City", :foreign_key => "origin_id"
   belongs_to              :destination, :class_name => "City", :foreign_key => "destination_id"
   has_and_belongs_to_many :flights
 
-  after_save        :find_or_create_flights
+  after_save :find_or_create_flights
 
   validates_presence_of :origin, :destination, :adults, :children, :maximum_price, :recipients
   validate              :different_city_for_origin_and_destination,
