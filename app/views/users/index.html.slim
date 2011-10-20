@@ -1,23 +1,27 @@
 .page-header
   h1 = User.model_name.human
 
-table.zebra-striped
-  thead
-    tr
-      th = User.human_attribute_name :email
-      th(style="text-align: center; width: 50px;") = User.human_attribute_name :active
-      th
-
-  tbody
-    - @users.each do |user|
+- if @user.any?
+  table.zebra-striped
+    thead
       tr
-        td = mail_to user.email
-        td style="text-align: center;"
-          - if user.active?
-            = image_tag "icons/tick.png"
-          - else
-            = image_tag "icons/cross.png"
-        td class="links" style="width:100px"
-          - if user.inactive?
-            = link_to 'Ativar', activate_user_path(user), :confirm => "Você tem certeza que deseja aprovar esse usuário?", :method => :put, :style => "margin-right:10px"
-          = link_to 'Excluir', user, :confirm => 'Você tem certeza que deseja excluir esse usuário?', :method => :delete
+        th = User.human_attribute_name :email
+        th(style="text-align: center; width: 50px;") = User.human_attribute_name :active
+        th
+
+    tbody
+      - @users.each do |user|
+        tr
+          td = mail_to user.email
+          td style="text-align: center;"
+            - if user.active?
+              = image_tag "icons/tick.png"
+            - else
+              = image_tag "icons/cross.png"
+          td class="links" style="width:100px"
+            - if user.inactive?
+              = link_to 'Ativar', activate_user_path(user), :confirm => "Você tem certeza que deseja aprovar esse usuário?", :method => :put, :style => "margin-right:10px"
+            = link_to 'Excluir', user, :confirm => 'Você tem certeza que deseja excluir esse usuário?', :method => :delete
+
+- else
+  p Não há nenhum viajante cadastrado.
