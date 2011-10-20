@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
 
   before_filter :require_login
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => "Ha. Você não pensou que esse sitema fosse seguro, não é mesmo?"
+  end
+
   private
 
   def not_authenticated
