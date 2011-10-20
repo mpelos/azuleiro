@@ -15,6 +15,7 @@ class TravelsController < ApplicationController
   end
 
   def create
+    @travel = current_user.travels.new(params[:travel])
     if @travel.save
       redirect_to @travel, :notice => "Sua viagem foi cadastrada com sucesso."
     else
