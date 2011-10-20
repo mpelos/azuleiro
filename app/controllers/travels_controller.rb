@@ -2,6 +2,7 @@ class TravelsController < ApplicationController
   load_and_authorize_resource
 
   def index
+    @travels = current_user.travels.avaliable
   end
 
   def show

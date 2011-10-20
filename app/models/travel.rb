@@ -20,7 +20,8 @@ class Travel < ActiveRecord::Base
                         :maximum_depart_range,
                         :maximum_return_range
 
-  default_scope where("end_return_datetime >= '#{2.hours.from_now.utc.to_formatted_s(:db)}'").order("start_depart_datetime", "end_return_datetime")
+  default_scope     order("start_depart_datetime", "end_return_datetime")
+  scope :avaliable, where("end_return_datetime >= '#{2.hours.from_now.utc.to_formatted_s(:db)}'")
 
   split_date_and_time :start_depart_datetime, :end_depart_datetime, :start_return_datetime, :end_return_datetime
 
