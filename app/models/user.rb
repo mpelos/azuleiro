@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
+  include EnumerateIt
+
   authenticates_with_sorcery!
+  has_enumeration_for :role
 
   has_many :travels, :dependent => :delete_all
 
