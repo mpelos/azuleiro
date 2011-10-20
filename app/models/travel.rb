@@ -3,6 +3,8 @@
 class Travel < ActiveRecord::Base
   extend DateTimeAccessors
 
+  MAXIMUM_TRAVELS_PER_USER = 3
+
   belongs_to              :user
   belongs_to              :origin,      :class_name => "City", :foreign_key => "origin_id"
   belongs_to              :destination, :class_name => "City", :foreign_key => "destination_id"
@@ -10,7 +12,7 @@ class Travel < ActiveRecord::Base
 
   after_save :find_or_create_flights
 
-  validates_presence_of :origin, :destination, :adults, :children, :maximum_price, :recipients
+  validates_presence_of :user, :origin, :destination, :adults, :children, :maximum_price, :recipients
   validate              :different_city_for_origin_and_destination,
                         :depart_date_range,
                         :return_date_range,
@@ -19,6 +21,8 @@ class Travel < ActiveRecord::Base
                         :depart_date_higher_then_return_date,
                         :maximum_depart_range,
                         :maximum_return_range
+
+  validate :maximum_travel_length_per_user, :unless => lambda { user.administrator? }
 
   default_scope     order("start_depart_datetime", "end_return_datetime")
   scope :avaliable, where("end_return_datetime >= '#{2.hours.from_now.utc.to_formatted_s(:db)}'")
@@ -105,6 +109,12 @@ class Travel < ActiveRecord::Base
     def maximum_return_range
       if ((end_depart_datetime - start_depart_datetime) / 3600).round > 72
         errors.add :return_range, "Sua disponibilidade de viagem para retorno deve ter no máximo 3 dias"
+      end
+    end
+
+    def maximum_travel_length_per_user
+      if user.travels.avaliable.length >= MAXIMUM_TRAVELS_PER_USER
+        errors.add :base, "Cadastrar #{MAXIMUM_TRAVELS_PER_USER} viagens não é o suficiente pra você?"
       end
     end
 
