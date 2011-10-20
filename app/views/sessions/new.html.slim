@@ -10,7 +10,7 @@
     = form_tag sessions_path do
       .clearfix
         = label_tag :email, "E-mail"
-        .input= text_field_tag :email, "", :class => "xlarge"
+        .input= text_field_tag :email, params[:email], :class => "xlarge"
 
       .clearfix
         = label_tag :password, "Senha"
