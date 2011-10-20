@@ -4,18 +4,13 @@ class UsersController < ApplicationController
 
   skip_before_filter :require_login
 
+  def index
+    @users = User.travellers
+  end
+
   def new
     if current_user
       redirect_to root_path
-    end
-  end
-
-  def create
-    if @user.save
-      login @user.email, params[:user][:password], false
-      redirect_to root_url, :notice => "Obrigado por se cadastrar. Seja bem vindo."
-    else
-      render :new
     end
   end
 
@@ -25,11 +20,32 @@ class UsersController < ApplicationController
     end
   end
 
+  def create
+    if @user.save
+      ApplicationMailer.user_waiting_for_approval(@user).deliver
+      redirect_to login_url(:email => @user.email), :notice => "Seu cadastro foi para aprovação. Aguarde."
+    else
+      render :new
+    end
+  end
+
   def update
     if @user.update_attributes(params[:user])
       redirect_to root_url, :notice => "Sua Senha foi alterada com sucesso."
     else
       render :edit
     end
+  end
+
+  def destroy
+    @user.destroy
+    redirect_to users_path
+  end
+
+  def activate
+    @user = User.find(params[:id])
+    @user.update_attribute :active, true
+    ApplicationMailer.user_approved(@user).deliver
+    redirect_to users_path
   end
 end

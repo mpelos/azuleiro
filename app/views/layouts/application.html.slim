@@ -25,6 +25,8 @@ html
           - if current_user
             ul class="nav"
               li = link_to "Viagens", travels_path
+              - if can?(:manage, User)
+                li = link_to "Usuários", users_path
 
             ul class="nav secondary-nav"
               li.menu

@@ -4,7 +4,9 @@ AzulChecker::Application.routes.draw do
   get "login"           => "sessions#new",     :as => :login
   get "logout"          => "sessions#destroy", :as => :logout
 
-  resources :users,    :path => "usuarios", :path_names => { :new => "novo" }, :except => [:show, :destroy]
+  resources :users,    :path => "usuarios", :path_names => { :new => "novo" }, :except => [:show] do
+    put "activate", :on => :member, :as => :activate, :path => "ativar"
+  end
   resources :sessions, :path => "login",    :only => [:index, :new, :create]
   resources :travels,  :path => "viagens",  :path_names => { :new => "nova", :edit => "editar" }
 

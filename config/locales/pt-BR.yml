@@ -237,6 +237,7 @@
         email: "E-mail"
         password: "Senha"
         password_confirmation: "Confirme sua senha"
+        active: "Ativo?"
 
       travel:
         origin: "Cidade de origem"

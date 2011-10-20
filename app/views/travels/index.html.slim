@@ -25,7 +25,7 @@
           td.links
             = link_to 'Visualizar', travel, :style => "margin-right:10px"
             = link_to 'Editar', edit_travel_path(travel), :style => "margin-right:10px"
-            = link_to 'Excluir', travel, :confirm => 'Você tem certeza?', :method => :delete
+            = link_to 'Excluir', travel, :confirm => 'Você tem certeza que deseja excluir essa viagem?', :method => :delete
 
 - else
   p Não há nenhuma viagem cadastrada.
