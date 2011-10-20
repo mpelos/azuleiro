@@ -1,6 +1,6 @@
 class AddRoleAndActiveToUsers < ActiveRecord::Migration
   def self.up
-    add_column :users, :role,   :integer, :default => Role::USER
+    add_column :users, :role,   :integer, :default => Role::TRAVELLER
     add_column :users, :active, :boolean, :default => false
   end
 
