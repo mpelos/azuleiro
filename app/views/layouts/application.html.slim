@@ -24,9 +24,9 @@ html
 
           - if current_user
             ul class="nav"
-              li = link_to "Viagens", travels_path
+              li(class=(controller.controller_name == "travels" && "active")) = link_to "Viagens", travels_path
               - if can?(:manage, User)
-                li = link_to "Usuários", users_path
+                li(class=(controller.controller_name == "users" && "active")) = link_to "Usuários", users_path
 
             ul class="nav secondary-nav"
               li.menu
