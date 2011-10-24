@@ -4,6 +4,6 @@ class UserLoggedConstraint
   end
 
   def matches? request
-    request.session[:user_id].present? == @logged
+    (request.session[:user_id].present? || request.cookies['remember_me_token'].present?) == @logged
   end
 end
