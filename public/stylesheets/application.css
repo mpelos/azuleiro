@@ -54,3 +54,9 @@ th.currency, td.currency {
     float: right;
     padding: 9px 20px;
     width: auto; }
+
+.datepicker {
+  background: url("/images/icons/calendar-blue.png") no-repeat right center; }
+
+input.time-entry {
+  background: url("/images/icons/clock-frame.png") no-repeat right center; }
