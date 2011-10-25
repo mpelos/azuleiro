@@ -16,7 +16,8 @@
       = " até "
       = form.text_field :end_depart_date, :class => "small datepicker", :'data-order' => 2
       = form.text_field :end_depart_time, :class => "mini time-entry"
-    span.help-block Coloque aqui sua disponibilidade para viagem de partida
+    - unless form.object.errors[:depart_range].present?
+      span.help-block Coloque aqui sua disponibilidade para viagem de partida
 
   div id="travel_return_datetime" style="#{!form.object.round_trip? && "display:none"}"
     = form.attribute :return_range, :label => "Retornando", :required => true do
@@ -26,7 +27,8 @@
         = " até "
         = form.text_field :end_return_date, :class => "small datepicker", :'data-order' => 4
         = form.text_field :end_return_time, :class => "mini time-entry"
-      span.help-block Coloque aqui sua disponibilidade para viagem de retorno
+      - unless form.object.errors[:return_range].present?
+        span.help-block Coloque aqui sua disponibilidade para viagem de retorno
 
   = form.attribute :adults, :label => Travel.human_attribute_name(:adults, :count => :many), :input_html => { :class => "mini" }
   = form.attribute :children, :label => Travel.human_attribute_name(:children, :count => :many), :input_html => { :class => "mini" }
