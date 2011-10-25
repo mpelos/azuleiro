@@ -127,7 +127,7 @@ class Travel < ActiveRecord::Base
   end
 
   def maximum_return_range
-    if ((end_depart_datetime - start_depart_datetime) / 3600).round > 72
+    if ((end_return_datetime - start_return_datetime) / 3600).round > 72
       errors.add :return_range, "Sua disponibilidade de viagem para retorno deve ter no máximo 3 dias"
     end
   end
