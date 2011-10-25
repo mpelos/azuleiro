@@ -1,4 +1,11 @@
 = simple_form_for @travel do |form|
+  = form.attribute :round_trip, :label => false do
+    .inline-inputs
+      = form.radio_button :round_trip, 1, :checked => form.object.round_trip? && true, :class => "travel-round-trip"
+      = label_tag "travel_round_trip_1", "Ida e volta", :style => "margin-right: 10px"
+      = form.radio_button :round_trip, 0, :checked => !form.object.round_trip && true, :class => "travel-round-trip"
+      = label_tag "travel_round_trip_0", "Somente ida"
+
   = form.association :origin
   = form.association :destination
 
@@ -11,14 +18,15 @@
       = form.text_field :end_depart_time, :class => "mini time-entry"
     span.help-block Coloque aqui sua disponibilidade para viagem de partida
 
-  = form.attribute :return_range, :label => "Retornando", :required => true do
-    .inline-inputs
-      = form.text_field :start_return_date, :class => "small datepicker", :'data-order' => 3
-      = form.text_field :start_return_time, :class => "mini time-entry"
-      = " até "
-      = form.text_field :end_return_date, :class => "small datepicker", :'data-order' => 4
-      = form.text_field :end_return_time, :class => "mini time-entry"
-    span.help-block Coloque aqui sua disponibilidade para viagem de retorno
+  div id="travel_return_datetime" style="#{!form.object.round_trip? && "display:none"}"
+    = form.attribute :return_range, :label => "Retornando", :required => true do
+      .inline-inputs
+        = form.text_field :start_return_date, :class => "small datepicker", :'data-order' => 3
+        = form.text_field :start_return_time, :class => "mini time-entry"
+        = " até "
+        = form.text_field :end_return_date, :class => "small datepicker", :'data-order' => 4
+        = form.text_field :end_return_time, :class => "mini time-entry"
+      span.help-block Coloque aqui sua disponibilidade para viagem de retorno
 
   = form.attribute :adults, :label => Travel.human_attribute_name(:adults, :count => :many), :input_html => { :class => "mini" }
   = form.attribute :children, :label => Travel.human_attribute_name(:children, :count => :many), :input_html => { :class => "mini" }

@@ -19,7 +19,11 @@
           td = travel.origin
           td = travel.destination
           td = travel.depart_schedules.any? ? l(travel.depart_schedules.first.datetime, :format => :short) : "Indisponível"
-          td = travel.return_schedules.any? ? l(travel.return_schedules.first.datetime, :format => :short) : "Indisponível"
+          td
+            - if travel.round_trip?
+              = travel.return_schedules.any? ? l(travel.return_schedules.first.datetime, :format => :short) : "Indisponível"
+            - else
+              | -
           td.currency = number_to_currency travel.lower_total_price
 
           td.links

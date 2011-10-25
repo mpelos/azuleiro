@@ -10,22 +10,25 @@ class Travel < ActiveRecord::Base
   belongs_to              :destination, :class_name => "City", :foreign_key => "destination_id"
   has_and_belongs_to_many :flights
 
-  after_save :find_or_create_flights
+  before_save :set_null_to_return_datetime, :if => lambda { !round_trip? }
+  after_save  :find_or_create_flights
 
   validates_presence_of :user, :origin, :destination, :adults, :children, :maximum_price, :recipients
   validate              :different_city_for_origin_and_destination,
                         :depart_date_range,
-                        :return_date_range,
                         :depart_date_in_the_future,
+                        :maximum_depart_range
+
+  validate              :return_date_range,
                         :return_date_in_the_future,
                         :depart_date_higher_then_return_date,
-                        :maximum_depart_range,
-                        :maximum_return_range
+                        :maximum_return_range,
+                        :if => lambda { round_trip? }
 
   validate :maximum_travel_length_per_user, :unless => lambda { user.administrator? }
 
   default_scope     order("start_depart_datetime", "end_return_datetime")
-  scope :avaliable, where("end_return_datetime >= '#{2.hours.from_now.utc.to_formatted_s(:db)}'")
+  scope :avaliable, where("end_depart_datetime >= '#{2.hours.from_now.utc.to_formatted_s(:db)}'")
 
   split_date_and_time :start_depart_datetime, :end_depart_datetime, :start_return_datetime, :end_return_datetime
 
@@ -34,7 +37,7 @@ class Travel < ActiveRecord::Base
   end
 
   def return_flights
-    flights.where(:origin_id => destination.id, :destination_id => origin.id)
+    flights.where(:origin_id => destination.id, :destination_id => origin.id) if round_trip?
   end
 
   def avaliable_schedules(origin_id, destination_id, minimum_datetime, maximum_datetime)
@@ -46,7 +49,7 @@ class Travel < ActiveRecord::Base
   end
 
   def return_schedules
-    avaliable_schedules destination.id, origin.id, start_return_datetime, end_return_datetime
+    avaliable_schedules destination.id, origin.id, start_return_datetime, end_return_datetime if round_trip?
   end
 
   def lower_depart_price
@@ -54,12 +57,16 @@ class Travel < ActiveRecord::Base
   end
 
   def lower_return_price
-    price_modifier * return_schedules.first.price.value if return_schedules.any?
+    if round_trip? && return_schedules.any?
+      price_modifier * return_schedules.first.price.value
+    end
   end
 
   def lower_total_price
-    if lower_depart_price.present? && lower_return_price.present?
+    if round_trip? && (lower_depart_price.present? && lower_return_price.present?)
       lower_depart_price + lower_return_price
+    elsif !round_trip? && lower_depart_price.present?
+      lower_depart_price
     end
   end
 
@@ -118,17 +125,23 @@ class Travel < ActiveRecord::Base
       end
     end
 
+    def set_null_to_return_datetime
+      self.start_return_datetime = nil
+      self.end_return_datetime   = nil
+    end
+
     def find_or_create_flights
       self.flights = []
       depart_range = start_depart_datetime.to_date..end_depart_datetime.to_date
-      return_range = start_return_datetime.to_date..end_return_datetime.to_date
-
       depart_range.each do |date|
         flights << Flight.find_or_create_by_origin_id_and_destination_id_and_date(origin_id, destination_id, date)
       end
 
-      return_range.each do |date|
-        flights << Flight.find_or_create_by_origin_id_and_destination_id_and_date(destination_id, origin_id, date)
+      if self.round_trip?
+        return_range = start_return_datetime.to_date..end_return_datetime.to_date
+        return_range.each do |date|
+          flights << Flight.find_or_create_by_origin_id_and_destination_id_and_date(destination_id, origin_id, date)
+        end
       end
     end
 

@@ -31,4 +31,14 @@ jQuery(function($) {
   // Twitter's Bootstrap
   $('.alert-message').alert();
   $('.topbar').dropdown();
+
+  // Travel's form
+  $('.travel-round-trip').click(function(){
+    if($(this).attr('value') == 0) {
+      $('#travel_return_datetime').slideUp('fast');
+    };
+    if($(this).attr('value') == 1) {
+      $('#travel_return_datetime').slideDown('fast');
+    };
+  });
 });

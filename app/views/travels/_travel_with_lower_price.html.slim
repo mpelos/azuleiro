@@ -1,6 +1,6 @@
 h2 Viagem com menor preço
 
-- if @travel.depart_schedules.any? || @travel.return_schedules.any?
+- if @travel.depart_schedules.any? || (@travel.round_trip? && @travel.return_schedules.any?)
   h3 Partindo
   - if @travel.depart_schedules.any?
     .row
@@ -13,17 +13,18 @@ h2 Viagem com menor preço
   - else
     p Não há nenhuma viagem disponível
 
-  h3 Retornando
-  - if @travel.return_schedules.any?
-    .row
-      .span6
-        p= l @travel.return_schedules.first.datetime
+  - if @travel.round_trip?
+    h3 Retornando
+    - if @travel.return_schedules.any?
+      .row
+        .span6
+          p= l @travel.return_schedules.first.datetime
 
-      .span2
-        p= number_to_currency @travel.lower_return_price
+        .span2
+          p= number_to_currency @travel.lower_return_price
 
-  - else
-    p Não há nenhuma viagem disponível
+    - else
+      p Não há nenhuma viagem disponível
 
   - if @travel.lower_total_price
     h3= "Total: #{number_to_currency @travel.lower_total_price}*"

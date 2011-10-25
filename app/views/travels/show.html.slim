@@ -15,10 +15,11 @@ p(class="alert-message block-message info") == "Será enviado um e-mail para #{m
         p = "De #{l(@travel.start_depart_datetime, :format => :short).downcase}"
         p = " até #{l(@travel.end_depart_datetime, :format => :short).downcase}"
 
-    .span6
-      = travel.attribute :return_at_range, :label => "Retornando" do
-        p = "De #{l(@travel.start_return_datetime, :format => :short).downcase}"
-        p = " até #{l(@travel.end_return_datetime, :format => :short).downcase}"
+    - if @travel.round_trip?
+      .span6
+        = travel.attribute :return_at_range, :label => "Retornando" do
+          p = "De #{l(@travel.start_return_datetime, :format => :short).downcase}"
+          p = " até #{l(@travel.end_return_datetime, :format => :short).downcase}"
 
   h2 Passageiros
   p
