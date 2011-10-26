@@ -5,9 +5,9 @@ namespace :flights do
   task :check => :environment do
     AzulWatcher.new.update_flight_prices
 
-    Travel.where(["end_depart_datetime >= ?", 2.hours.from_now]).each do |travel|
+    Travel.avaliable.each do |travel|
       if travel.lower_total_price <= travel.maximum_price
-        ScheduleMailer.notify_lower_price(travel).deliver
+        ApplicationMailer.affordable_price(travel)
       end
     end
   end

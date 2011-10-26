@@ -11,4 +11,9 @@ class ApplicationMailer < ActionMailer::Base
     @user = user
     mail :to => user.email, :subject => "Sua conta foi aprovada"
   end
+
+  def affordable_price(travel)
+    @travel = travel
+    mail :to => travel.recipients.gsub(" ", "").split(","), :subject => "O voo na azul para #{travel.destination} está com preço acessível"
+  end
 end

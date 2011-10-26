@@ -1,0 +1,7 @@
+h1(style="font-size: 2em;") #{@travel.origin}/#{@travel.destination}
+p Partindo: #{l(@travel.depart_schedules.first.datetime)}
+- if @travel.round_trip?
+  p Retornando: #{l(@travel.return_schedules.first.datetime)}
+p Passageiros: #{@travel.adults} #{Travel.human_attribute_name(:adults, :count => @travel.adults).downcase}
+p(style="font-size: 1.4em") Total: #{number_to_currency @travel.lower_total_price}*
+p(style="font-size: 0.8em") * Esse valor não inclui taxas de embarque. Confira o valor real no site da Azul.
