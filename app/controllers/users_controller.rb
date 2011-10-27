@@ -43,9 +43,7 @@ class UsersController < ApplicationController
   end
 
   def activate
-    @user = User.find(params[:id])
-    @user.update_attribute :active, true
-    ApplicationMailer.user_approved(@user).deliver
+    User.find(params[:id]).activate!
     redirect_to users_path
   end
 end

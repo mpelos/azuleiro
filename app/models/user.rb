@@ -17,11 +17,23 @@ class User < ActiveRecord::Base
   scope :travellers,     where(:role => Role::TRAVELLER)
   scope :administrators, where(:role => Role::ADMINISTRATOR)
 
+  after_save :send_approval_email, :if => lambda { active_changed? && active? }
+
   def active?
     active
   end
 
   def inactive?
-    !active
+    not active?
+  end
+
+  def activate!
+    update_attribute :active, true
+  end
+
+  private
+
+  def send_approval_email
+    ApplicationMailer.user_approved(self).deliver
   end
 end
