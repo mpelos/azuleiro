@@ -33,10 +33,14 @@ class Travel < ActiveRecord::Base
   split_date_and_time :start_depart_datetime, :end_depart_datetime, :start_return_datetime, :end_return_datetime
 
   def depart_flights
+    # Relation bug here...
+    # flights.from(origin).to(destination)
     flights.where(:origin_id => origin.id, :destination_id => destination.id)
   end
 
   def return_flights
+    # Relation bug here...
+    # flights.from(destination).to(origin)
     flights.where(:origin_id => destination.id, :destination_id => origin.id) if round_trip?
   end
 

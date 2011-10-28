@@ -8,4 +8,7 @@ class Flight < ActiveRecord::Base
   validates_presence_of :origin, :destination, :date
 
   default_scope order("origin_id", "destination_id", "date")
+
+  scope :from, lambda { |origin| where(:origin_id => origin.id) }
+  scope :to,   lambda { |destination| where(:destination_id => destination.id) }
 end
