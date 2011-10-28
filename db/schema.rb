@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111024015951) do
+ActiveRecord::Schema.define(:version => 20111028003946) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(:version => 20111024015951) do
   end
 
   create_table "flights", :force => true do |t|
-    t.integer  "origin_id"
-    t.integer  "destination_id"
-    t.date     "date"
+    t.integer  "origin_id",      :null => false
+    t.integer  "destination_id", :null => false
+    t.date     "date",           :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

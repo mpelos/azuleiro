@@ -5,5 +5,7 @@ class Flight < ActiveRecord::Base
   has_many                :schedules,   :dependent => :destroy
   has_many                :prices,      :dependent => :destroy
 
+  validates_presence_of :origin, :destination, :date
+
   default_scope order("origin_id", "destination_id", "date")
 end
