@@ -1,4 +1,7 @@
 jQuery(function($) {
+  // Chosen
+  $('.chosen').chosen();
+
   // jQUery-UI
   $('.datepicker').datepicker({
     selectOtherMonths: true,

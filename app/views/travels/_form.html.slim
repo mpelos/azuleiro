@@ -6,8 +6,8 @@
       = form.radio_button :round_trip, 0, :checked => !form.object.round_trip && true, :class => "travel-round-trip"
       = label_tag "travel_round_trip_0", "Somente ida"
 
-  = form.association :origin
-  = form.association :destination
+  = form.association :origin,      :input_html => { :class => "chosen" }, :prompt => "Selecione"
+  = form.association :destination, :input_html => { :class => "chosen" }, :prompt => "Selecione"
 
   = form.attribute :depart_range, :label => "Partindo", :required => true do
     .inline-inputs
