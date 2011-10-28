@@ -28,7 +28,7 @@ class Travel < ActiveRecord::Base
   validate :maximum_travel_length_per_user, :unless => lambda { user.administrator? }
 
   default_scope     order("start_depart_datetime", "end_return_datetime")
-  scope :avaliable, where("end_depart_datetime >= '#{2.hours.from_now.utc.to_formatted_s(:db)}'")
+  scope :available, where("end_depart_datetime >= ?", 2.hours.from_now)
 
   split_date_and_time :start_depart_datetime, :end_depart_datetime, :start_return_datetime, :end_return_datetime
 
@@ -40,7 +40,7 @@ class Travel < ActiveRecord::Base
     flights.where(:origin_id => destination.id, :destination_id => origin.id) if round_trip?
   end
 
-  def avaliable_schedules(origin_id, destination_id, minimum_datetime, maximum_datetime)
+  def available_schedules(origin_id, destination_id, minimum_datetime, maximum_datetime)
     Schedule.find_by_sql <<-QUERY
       SELECT
         `schedules`.*
@@ -68,11 +68,11 @@ class Travel < ActiveRecord::Base
   end
 
   def depart_schedules
-    avaliable_schedules origin.id, destination.id, start_depart_datetime, end_depart_datetime
+    available_schedules origin.id, destination.id, start_depart_datetime, end_depart_datetime
   end
 
   def return_schedules
-    avaliable_schedules destination.id, origin.id, start_return_datetime, end_return_datetime if round_trip?
+    available_schedules destination.id, origin.id, start_return_datetime, end_return_datetime if round_trip?
   end
 
   def lower_depart_price
@@ -144,7 +144,7 @@ class Travel < ActiveRecord::Base
   end
 
   def maximum_travel_length_per_user
-    if user.travels.avaliable.length >= MAXIMUM_TRAVELS_PER_USER
+    if user.travels.available.length >= MAXIMUM_TRAVELS_PER_USER
       errors.add :base, "Cadastrar #{MAXIMUM_TRAVELS_PER_USER} viagens não é o suficiente pra você?"
     end
   end
