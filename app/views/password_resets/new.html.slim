@@ -1,0 +1,14 @@
+.page-header
+  h1 Esqueci Minha Senha
+
+= render "layouts/flash_messages"
+
+= form_tag password_resets_path do
+  .clearfix
+    = label_tag :email, "E-mail"
+    .input = email_field_tag :email
+
+  .actions
+    = submit_tag "Recuperar", :class => "btn primary"
+    = " "
+    = link_to "Cancelar", login_path, :class => "btn"

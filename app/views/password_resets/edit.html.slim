@@ -1,0 +1,11 @@
+.page-header
+  h1 = @user.email
+
+= simple_form_for @user, :url => password_reset_path(@user.reset_password_token), :html => { :method => :put } do |f|
+  = f.attribute :password
+  = f.attribute :password_confirmation
+
+  .actions
+    = f.submit "Alterar", :class => "btn primary"
+    = " "
+    = link_to "Cancelar", login_path, :class => "btn"

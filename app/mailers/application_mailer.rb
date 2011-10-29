@@ -16,4 +16,9 @@ class ApplicationMailer < ActionMailer::Base
     @travel = travel
     mail :to => travel.recipients.gsub(" ", "").split(","), :subject => "O voo na azul para #{travel.destination} está com preço acessível"
   end
+
+  def reset_password_email(user)
+    @user = user
+    mail(:to => user.email, :subject => "Sua senha está pronta para ser alterada")
+  end
 end

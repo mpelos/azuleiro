@@ -1,12 +1,15 @@
 AzulChecker::Application.routes.draw do
-  get "signup"          => "users#new",        :as => :signup, :path => "cadastre-se"
-  get "change_password" => "users#edit",       :as => :change_password, :path => "alterar-senha"
-  get "login"           => "sessions#new",     :as => :login
-  get "logout"          => "sessions#destroy", :as => :logout
+  get "signup"                 => "users#new",            :as => :signup, :path => "cadastre-se"
+  get "change_password"        => "users#edit",           :as => :change_password, :path => "alterar-senha"
+  get "login"                  => "sessions#new",         :as => :login
+  get "logout"                 => "sessions#destroy",     :as => :logout
+  get "forgot_password"        => "password_resets#new",  :as => :forgot_password, :path => "esqueci-minha-senha"
+  get "forgot_password/:token" => "password_resets#edit", :as => :edit_password,   :path => "esqueci-minha-senha/:token"
 
   resources :users,    :path => "usuarios", :path_names => { :new => "novo" }, :except => [:show] do
     put "activate", :on => :member, :as => :activate, :path => "ativar"
   end
+  resources :password_resets, :only => [:new, :create, :edit, :update]
   resources :sessions, :path => "login",    :only => [:index, :new, :create]
   resources :travels,  :path => "viagens",  :path_names => { :new => "nova", :edit => "editar" }
 

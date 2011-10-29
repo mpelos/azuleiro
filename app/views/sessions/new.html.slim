@@ -2,9 +2,7 @@
   .page-header
     h1 Login
 
-  - flash.each do |key, value|
-    div class="alert-message #{key}"
-      = value
+  = render "layouts/flash_messages"
 
   fieldset
     = form_tag sessions_path do
@@ -21,3 +19,5 @@
           = check_box_tag :remember_me, 1, params[:remember_me]
           = label_tag :remember_me, "Lembrar-me", :id => "remember_me_label"
           = submit_tag "Login", :class => "btn large"
+
+    = link_to "Esqueceu sua senha?", forgot_password_path

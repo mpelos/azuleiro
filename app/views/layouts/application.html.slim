@@ -45,10 +45,7 @@ html
     #root
       .container
         - if current_user
-          - flash.each do |type, message|
-            p(class="alert-message #{type} fade in" data-alert="alert")
-              a(href="#" class="close") x
-              strong = message
+          = render "layouts/flash_messages"
 
         = yield
 
