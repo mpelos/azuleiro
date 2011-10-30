@@ -14,7 +14,7 @@ class ApplicationMailer < ActionMailer::Base
 
   def affordable_price(travel)
     @travel = travel
-    mail :to => travel.recipients.gsub(" ", "").split(","), :subject => "O voo na azul para #{travel.destination} está com preço acessível"
+    mail :to => travel.recipients.gsub(" ", "").split(","), :subject => "O voo na Azul para #{travel.destination} está com preço acessível"
   end
 
   def reset_password_email(user)
