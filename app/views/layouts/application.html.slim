@@ -27,13 +27,13 @@ html
           - if current_user
             ul class="nav"
               li(class=(controller.controller_name == "travels" && "active")) = link_to "Viagens", travels_path
-              - if can?(:manage, User)
-                li(class=(controller.controller_name == "users" && "active")) = link_to "Usuários", users_path
 
             ul class="nav secondary-nav"
               li.menu
                 = link_to current_user.email, "#", :class => "menu"
                 ul.menu-dropdown
+                  - if can?(:manage, User)
+                    li = link_to "Gerenciar Usuários", users_path
                   li = link_to "Alterar senha", change_password_path
                   li.divider
                   li= link_to "Sair", logout_path
