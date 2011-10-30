@@ -7,7 +7,7 @@ namespace :flights do
 
     Travel.available.each do |travel|
       if travel.lower_total_price.present? && (travel.lower_total_price <= travel.maximum_price)
-        ApplicationMailer.affordable_price(travel)
+        ApplicationMailer.affordable_price(travel).deliver
       end
     end
   end
