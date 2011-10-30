@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class ApplicationMailer < ActionMailer::Base
-  default :from => "verificador_azul@randomhost.com.br"
+  default :from => "Azuleiro <azuleiro@randomhost.com.br>"
 
   def user_waiting_for_approval(user)
     @user = user
