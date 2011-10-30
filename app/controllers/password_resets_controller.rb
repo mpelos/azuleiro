@@ -23,7 +23,7 @@ class PasswordResetsController < ApplicationController
     not_authenticated if @user.nil?
 
     if @user.update_attributes(params[:user])
-      login(@user.email, params[:user][:password], false)
+      login(@user.email, params[:user][:password], false) if @user.active?
       redirect_to(root_path, :notice => "Sua senha foi alterada. Guarde-a com carinho.")
     else
       render :action => "edit"
