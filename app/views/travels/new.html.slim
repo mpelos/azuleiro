@@ -4,7 +4,7 @@
 
   h1 Nova Viagem
 
-- if current_user.travels.available.length >= Travel::MAXIMUM_TRAVELS_PER_USER && @travel.errors.empty?
+- if current_user.travels.available.length >= Travel::MAXIMUM_TRAVELS_PER_USER && @travel.errors.empty? && current_user.traveller?
   p(class="alert-message") Você atingiu o limite de viagens cadastradas. Não será possível criar uma nova.
 - elsif @travel.errors[:base].any?
   p(class="alert-message error") = @travel.errors[:base].first
