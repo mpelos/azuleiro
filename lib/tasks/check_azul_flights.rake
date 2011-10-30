@@ -6,7 +6,7 @@ namespace :flights do
     AzulWatcher.new.update_flight_prices
 
     Travel.available.each do |travel|
-      if travel.lower_total_price <= travel.maximum_price
+      if travel.lower_total_price.present? && (travel.lower_total_price <= travel.maximum_price)
         ApplicationMailer.affordable_price(travel)
       end
     end
