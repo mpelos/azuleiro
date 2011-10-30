@@ -5,7 +5,7 @@ namespace :flights do
   task :check => :environment do
     AzulWatcher.new.update_flight_prices
 
-    Travel.avaliable.each do |travel|
+    Travel.available.each do |travel|
       if travel.lower_total_price <= travel.maximum_price
         ApplicationMailer.affordable_price(travel)
       end
