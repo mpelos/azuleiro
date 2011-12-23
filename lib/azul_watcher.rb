@@ -20,7 +20,7 @@ class AzulWatcher
         submit
 
         if @session.has_xpath? "//table[@class='info-table']"
-          @session.find(:xpath, "//table[@class='info-table']").text.split("#{flight.origin.code}\n#{flight.destination.code}\n").reverse.drop(1).each do |text|
+          @session.find(:xpath, "//table[@class='info-table']").text.split(/\n[0-9]{4}/).drop(1).each do |text|
             localized_time = text.match(/\d{2}:\d{2}/).to_s
             schedule = Schedule.find_or_create_by_datetime(DateTime.parse("#{flight.date.to_s} #{localized_time}:00 #{DateTime.current.formatted_offset}"))
             price = Price.find_or_create_by_value(text.match(/\d*\.*\d+,\d{2}/).to_s.delete(".").sub(",", ".").to_f)
