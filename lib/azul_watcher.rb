@@ -6,20 +6,21 @@ class AzulWatcher
     headless.start
 
     @session = Capybara::Session.new(:webkit)
-    @session.visit("http://viajemais.voeazul.com.br")
+    @session.visit("http://www.voeazul.com.br")
 
-    select_one_way_radio
-    select_one_adult
+    @session.find(".jqTransformSelectOpen").click
+    @session.execute_script("$('input[value=OneWay]').removeClass('jqTransformHidden');")
+    @session.choose("AvailabilitySearchInputSearchView22$RadioButtonMarketStructure")
 
     Flight.where("date >= ?", Date.current).each do |flight|
       if flight.travels.any?
         select_origin_city      flight.origin.code
         select_destination_city flight.destination.code
         select_depart_date      flight.date
-        @session.click_link     "COMPRE AGORA"
+        submit
 
         if @session.has_xpath? "//table[@class='info-table']"
-          @session.find(:xpath, "//table[@class='info-table']").text.split("\nvoo ").drop(1).each do |text|
+          @session.find(:xpath, "//table[@class='info-table']").text.split("#{flight.origin.code}\n#{flight.destination.code}\n").reverse.drop(1).each do |text|
             localized_time = text.match(/\d{2}:\d{2}/).to_s
             schedule = Schedule.find_or_create_by_datetime(DateTime.parse("#{flight.date.to_s} #{localized_time}:00 #{DateTime.current.formatted_offset}"))
             price = Price.find_or_create_by_value(text.match(/\d*\.*\d+,\d{2}/).to_s.delete(".").sub(",", ".").to_f)
@@ -34,50 +35,40 @@ class AzulWatcher
   end
 
   protected
-    def select_one_way_radio
-      if @session.current_url == "http://viajemais.voeazul.com.br/"
-        radio_button = "#ControlGroupMainSearchView2_AvailabilitySearchInputSearchView2_OneWay"
-      else
-        radio_button = "#AvailabilitySearchInputSelectView2_OneWay"
-      end
-
-      @session.find(radio_button).click
-    end
-
     def select_origin_city(city_code)
-      if @session.current_url == "http://viajemais.voeazul.com.br/"
-        select_box = "ControlGroupMainSearchView2_AvailabilitySearchInputSearchView2_DropDownListMarketOrigin1"
+      if @session.current_url == "http://www.voeazul.com.br/"
+        @session.execute_script "comboAzul.selecionou('#{city_code}', this,'.txtBusca3', 'true', 'origem', 'Estouem2', '#{city_code}');"
       else
-        select_box = "AvailabilitySearchInputSelectView2_DropDownListMarketOrigin1"
+        @session.execute_script "setDropAirport('#{city_code}','AvailabilitySearchInputSelectView2_DropDownListMarketOrigin1')"
       end
-
-      @session.execute_script "setDropAirport('#{city_code}','#{select_box}')"
     end
 
     def select_destination_city(city_code)
-      if @session.current_url == "http://viajemais.voeazul.com.br/"
-        select_box = "ControlGroupMainSearchView2_AvailabilitySearchInputSearchView2_DropDownListMarketDestination1"
+      if @session.current_url == "http://www.voeazul.com.br/"
+        @session.execute_script "comboAzul.selecionou('#{city_code}', this,'.txtBusca4', 'true', 'destino', 'Estouem2', '#{city_code}');"
       else
-        select_box = "AvailabilitySearchInputSelectView2_DropDownListMarketDestination1"
+        @session.execute_script "setDropAirport('#{city_code}','AvailabilitySearchInputSelectView2_DropDownListMarketDestination1')"
       end
 
-      @session.execute_script "setDropAirport('#{city_code}','#{select_box}')"
     end
 
     def select_depart_date(date)
-      if @session.current_url == "http://viajemais.voeazul.com.br/"
-        day_select_box = "ControlGroupMainSearchView2_AvailabilitySearchInputSearchView2_DropDownListMarketDay1"
-        month_year_select_box = "ControlGroupMainSearchView2_AvailabilitySearchInputSearchView2_DropDownListMarketMonth1"
+      if @session.current_url == "http://www.voeazul.com.br/"
+        @session.fill_in "somenteidaData1", :with => I18n.l(date)
       else
-        day_select_box = "AvailabilitySearchInputSelectView2_DropDownListMarketDay1"
-        month_year_select_box = "AvailabilitySearchInputSelectView2_DropDownListMarketMonth1"
+        @session.execute_script "showBuyBlock();"
+        @session.execute_script "$('#AvailabilitySearchInputSelectView2_DropDownListMarketDay1').show();"
+        @session.execute_script "$('#AvailabilitySearchInputSelectView2_DropDownListMarketMonth1').show();"
+        @session.select I18n.l(date, :format => :only_day), :from => "AvailabilitySearchInputSelectView2_DropDownListMarketDay1"
+        @session.select I18n.l(date, :format => :discard_day), :from => "AvailabilitySearchInputSelectView2_DropDownListMarketMonth1"
       end
-
-      @session.select I18n.l(date, :format => :only_day), :from => day_select_box
-      @session.select I18n.l(date, :format => :discard_day), :from => month_year_select_box
     end
 
-    def select_one_adult
-      @session.select "1", :from => "ControlGroupMainSearchView2$AvailabilitySearchInputSearchView2$DropDownListPassengerType_ADT"
+    def submit
+      if @session.current_url == "http://www.voeazul.com.br/"
+        @session.find("#btn-somenteida").click
+      else
+        @session.click_link "AvailabilitySearchInputSelectView2_LinkButtonNewSearch"
+      end
     end
 end
