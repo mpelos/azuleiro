@@ -18,14 +18,12 @@ gem 'whenever', :require => false
 
 group :development do
   gem 'capistrano'
-  gem 'ruby-debug',   :platforms => :mri_18
-  gem 'ruby-debug19', :platforms => :mri_19, :require => 'ruby-debug'
 end
 
 group :development, :test do
   gem 'wirble'
-  gem 'ruby-debug',   :platforms => :mri_18
-  gem 'ruby-debug19', :platforms => :mri_19, :require => 'ruby-debug'
+  # gem 'ruby-debug',   :platforms => :mri_18
+  # gem 'ruby-debug19', :platforms => :mri_19, :require => 'ruby-debug'
   gem 'rspec-rails'
   gem 'fabrication'
   gem 'shoulda-matchers'
